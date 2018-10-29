@@ -1,13 +1,13 @@
-package pl.szbd.controllers;
+package pl.szbd.virtual.university.controllers;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.szbd.entity.Student;
-import pl.szbd.entity.Team;
-import pl.szbd.repository.StudentRepository;
-import pl.szbd.repository.TeamRepository;
+import pl.szbd.virtual.university.entity.Student;
+import pl.szbd.virtual.university.entity.Team;
+import pl.szbd.virtual.university.repository.StudentRepository;
+import pl.szbd.virtual.university.repository.TeamRepository;
 
 
 @Service

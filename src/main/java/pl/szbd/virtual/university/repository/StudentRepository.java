@@ -1,10 +1,10 @@
-package pl.szbd.repository;
+package pl.szbd.virtual.university.repository;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pl.szbd.entity.Student;
+import pl.szbd.virtual.university.entity.Student;
 
 
 @Repository

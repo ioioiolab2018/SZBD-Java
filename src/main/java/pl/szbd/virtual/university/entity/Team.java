@@ -1,4 +1,4 @@
-package pl.szbd.entity;
+package pl.szbd.virtual.university.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;

@@ -1,4 +1,4 @@
-package pl.szbd;
+package pl.szbd.virtual.university;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -6,8 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import pl.szbd.controllers.SoccerService;
-import pl.szbd.entity.Student;
+import pl.szbd.virtual.university.controllers.SoccerService;
+import pl.szbd.virtual.university.entity.Student;
 
 import java.util.List;
 

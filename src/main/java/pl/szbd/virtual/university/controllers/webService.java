@@ -1,4 +1,4 @@
-package pl.szbd.controllers;
+package pl.szbd.virtual.university.controllers;
 
 
 import org.slf4j.Logger;
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.szbd.entity.Student;
-import pl.szbd.repository.StudentRepository;
+import pl.szbd.virtual.university.entity.Student;
+import pl.szbd.virtual.university.repository.StudentRepository;
 
 import java.util.List;
 

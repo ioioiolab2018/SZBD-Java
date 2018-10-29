@@ -1,6 +1,6 @@
-package pl.szbd.controllers;
+package pl.szbd.virtual.university.controllers;
 
-import pl.szbd.entity.Student;
+import pl.szbd.virtual.university.entity.Student;
 
 import java.util.List;
 
