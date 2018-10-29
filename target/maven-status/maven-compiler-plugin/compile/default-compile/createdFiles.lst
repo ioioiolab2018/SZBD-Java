@@ -1,0 +1,4 @@
+pl\mloza\controllers\MainController.class
+pl\mloza\repository\TaskRepository.class
+pl\mloza\Main.class
+pl\mloza\entity\Task.class
