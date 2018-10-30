@@ -3,22 +3,15 @@ package pl.szbd.virtual.university;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import pl.szbd.virtual.university.controllers.SoccerService;
-import pl.szbd.virtual.university.entity.Student;
-
-import java.util.List;
+import pl.szbd.virtual.university.domain.student.service.PersonService;
 
 
-@EnableAutoConfiguration
-@ComponentScan
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
     @Autowired
-    SoccerService soccerService;
+    PersonService personService;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -26,12 +19,6 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... arg0) throws Exception {
-
-        soccerService.addBarcelonaPlayer("Xavi Hernandez", "Midfielder", 6);
-
-        List<Student> students = soccerService.getAllTeamPlayers(1);
-        for (Student student : students) {
-            System.out.println("Introducing Barca student => " + student);
+        System.out.println("DZIALA!!!!");
         }
     }
-}
