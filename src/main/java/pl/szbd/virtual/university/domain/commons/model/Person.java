@@ -1,15 +1,16 @@
-package pl.szbd.virtual.university.domain.commons;
+package pl.szbd.virtual.university.domain.commons.model;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.Date;
 
 @Entity
-@Table(name = "PERSONS", schema = "WEBUSER")
+@Table(name = "PERSONS")
 public class Person {
     private String name;
     private String name2;
     private String surname;
-    private Time birthDate;
+    private Date birthDate;
     private String birthplace;
     private String fatherName;
     private String motherName;
@@ -48,11 +49,11 @@ public class Person {
 
     @Basic
     @Column(name = "BIRTH_DATE")
-    public Time getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Time birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 

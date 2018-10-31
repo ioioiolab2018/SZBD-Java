@@ -1,7 +1,7 @@
-package pl.szbd.virtual.university.domain.student.repository;
+package pl.szbd.virtual.university.domain.commons.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import pl.szbd.virtual.university.domain.commons.Person;
+import pl.szbd.virtual.university.domain.commons.model.Person;
 
 public interface PersonRepository extends CrudRepository<Person, String>{
 
