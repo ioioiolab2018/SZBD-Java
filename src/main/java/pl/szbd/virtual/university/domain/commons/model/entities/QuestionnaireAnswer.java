@@ -6,7 +6,7 @@ import java.util.Date;
 @Entity(name = "QUESTIONNAIRE_ANSWERS")
 public class QuestionnaireAnswer {
     private Long id;
-    private String Value;
+    private String answer;
     private Questionnaire questionnaire;
     private Person person;
     private Date date;
@@ -21,18 +21,18 @@ public class QuestionnaireAnswer {
         this.id = id;
     }
 
-    @Column(name = "VALUE")
+    @Column(name = "ANSWER")
     @Lob
-    public String getValue() {
-        return Value;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setValue(String value) {
-        Value = value;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "questionnaire_id")
+    @JoinColumn(name = "QUESTIONNAIRE_ID")
     public Questionnaire getQuestionnaire() {
         return questionnaire;
     }
@@ -42,7 +42,7 @@ public class QuestionnaireAnswer {
     }
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "PERSON_ID")
     public Person getPerson() {
         return person;
     }
@@ -51,7 +51,7 @@ public class QuestionnaireAnswer {
         this.person = person;
     }
 
-    @Column(name = "QUEST_DATE")
+    @Column(name = "DT")
     public Date getDate() {
         return date;
     }
@@ -62,12 +62,12 @@ public class QuestionnaireAnswer {
 
     @Override
     public String toString() {
-        return "QuestionnaireAnswer{" +
-                "id=" + id +
-                ", Value='" + Value + '\'' +
-                ", questionnaire=" + questionnaire +
-                ", person=" + person +
-                ", date=" + date +
-                '}';
+        return "{ " +
+                "id: " + id +
+                ", answer: '" + answer + '\'' +
+                ", questionnaire: " + questionnaire +
+                ", person: " + person +
+                ", date: " + date +
+                " }";
     }
 }

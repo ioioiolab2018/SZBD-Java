@@ -25,7 +25,7 @@ public class Proposal {
     }
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "PERSON_ID")
     public Person getPerson() {
         return person;
     }
@@ -63,7 +63,7 @@ public class Proposal {
         this.answer = answer;
     }
 
-    @Column(name = "SUBMISSIOn_DATE")
+    @Column(name = "SUBMISSION_DATE")
     public Date getSubmissionDate() {
         return submissionDate;
     }
@@ -92,11 +92,15 @@ public class Proposal {
 
     @Override
     public String toString() {
-        return "Proposal{" +
-                "id=" + id +
-                ", person=" + person +
-                ", topic='" + topic + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+        return "{ " +
+                "id: " + id +
+                ", person: " + person +
+                ", topic: '" + topic + '\'' +
+                ", content: '" + content + '\'' +
+                ", answer: '" + answer + '\'' +
+                ", submissionDate: " + submissionDate +
+                ", answerDate: " + answerDate +
+                ", shortAnswer: '" + shortAnswer + '\'' +
+                " }";
     }
 }
