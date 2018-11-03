@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.szbd.virtual.university.domain.commons.model.Person;
+import pl.szbd.virtual.university.domain.commons.model.entities.Person;
 import pl.szbd.virtual.university.domain.commons.service.PersonService;
 
 
@@ -19,7 +19,7 @@ public class Commons {
     private PersonService personService;
 
     @RequestMapping("/person/{pesel}")
-    private Person getPerson(@PathVariable String pesel){
+    private Person getPerson(@PathVariable String pesel) {
         return personService.getPerson(pesel);
     }
 }

@@ -1,11 +1,12 @@
-package pl.szbd.virtual.university.domain.commons.model;
+package pl.szbd.virtual.university.domain.commons.model.entities;
+
+import pl.szbd.virtual.university.domain.commons.model.enums.SexEnum;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
 
-@Entity
-@Table(name = "PERSONS")
+@Entity(name = "PERSONS")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
     private String name;
     private String name2;
@@ -14,7 +15,7 @@ public class Person {
     private String birthplace;
     private String fatherName;
     private String motherName;
-    private String sex;
+    private SexEnum sex;
     private String pesel;
 
     @Basic
@@ -87,13 +88,14 @@ public class Person {
         this.motherName = motherName;
     }
 
-    @Basic
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "SEX")
-    public String getSex() {
+    public SexEnum getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(SexEnum sex) {
         this.sex = sex;
     }
 

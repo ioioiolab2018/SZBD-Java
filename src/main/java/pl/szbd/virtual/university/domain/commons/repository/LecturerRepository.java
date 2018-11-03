@@ -1,0 +1,8 @@
+package pl.szbd.virtual.university.domain.commons.repository;
+
+import org.springframework.data.repository.CrudRepository;
+import pl.szbd.virtual.university.domain.commons.model.entities.Lecturer;
+
+public interface LecturerRepository extends CrudRepository<Lecturer, String> {
+
+}
