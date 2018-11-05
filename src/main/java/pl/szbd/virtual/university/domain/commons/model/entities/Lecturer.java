@@ -1,5 +1,7 @@
 package pl.szbd.virtual.university.domain.commons.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import pl.szbd.virtual.university.domain.commons.model.enums.AcademicDegreeEnum;
 
 import javax.persistence.*;
@@ -7,6 +9,7 @@ import java.util.Date;
 
 @Entity(name = "LECTURERS")
 @PrimaryKeyJoinColumn(name = "lecturer_id")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Lecturer extends Person {
     private AcademicDegreeEnum academicDefree;
     private String office;

@@ -13,6 +13,8 @@ public class StudySubject {
     private Lecturer lecturer;
 
     @Id
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "study_Subject_Sequence")
+    @SequenceGenerator(name = "study_Subject_Sequence", sequenceName = "STUDY_SUBJECT_SEQ")
     public Long getId() {
         return id;
     }

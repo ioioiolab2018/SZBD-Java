@@ -1,24 +1,33 @@
 package pl.szbd.virtual.university.domain.commons.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "APP_USERS")
 public class User {
-    private Long id;
+    private String id;
+    private Person person;
     private String login;
     private String password;
     private Date lastLogin;
 
     @Id
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Column(name = "LOGIN", unique = true)

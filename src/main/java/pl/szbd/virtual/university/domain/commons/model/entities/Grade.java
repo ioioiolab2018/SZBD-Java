@@ -16,7 +16,8 @@ public class Grade {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "grade_Sequence")
+    @SequenceGenerator(name = "grade_Sequence", sequenceName = "GRADE_SEQ")
     public Long getId() {
         return id;
     }

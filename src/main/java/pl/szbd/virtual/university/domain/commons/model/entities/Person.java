@@ -1,11 +1,14 @@
 package pl.szbd.virtual.university.domain.commons.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import pl.szbd.virtual.university.domain.commons.model.enums.SexEnum;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "PERSONS")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
     private String name;

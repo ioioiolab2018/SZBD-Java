@@ -12,7 +12,8 @@ public class QuestionnaireAnswer {
     private Date date;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "questionnaire_Answer_Sequence")
+    @SequenceGenerator(name = "questionnaire_Answer_Sequence", sequenceName = "QUESTIONNAIRE_ANSWER_SEQ")
     public Long getId() {
         return id;
     }

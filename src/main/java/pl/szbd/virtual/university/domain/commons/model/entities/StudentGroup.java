@@ -2,10 +2,7 @@ package pl.szbd.virtual.university.domain.commons.model.entities;
 
 import pl.szbd.virtual.university.domain.commons.model.enums.StudyTypeEnum;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "STUDENT_GROUPS")
@@ -19,7 +16,9 @@ public class StudentGroup {
     private Date endDate;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "student_Group_Sequence")
+    @SequenceGenerator(name = "student_Group_Sequence", sequenceName = "STUDENT_GROUP_SEQ")
+
     public Long getId() {
         return id;
     }

@@ -1,6 +1,7 @@
 package pl.szbd.virtual.university.domain.commons.model.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
 import pl.szbd.virtual.university.domain.commons.model.enums.ConcactType2Enum;
 import pl.szbd.virtual.university.domain.commons.model.enums.ContactTypeEnum;
 
@@ -15,7 +16,8 @@ public class Contact {
     private ConcactType2Enum type;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "contact_Sequence")
+    @SequenceGenerator(name = "contact_Sequence", sequenceName = "CONTACT_SEQ")
     public Long getId() {
         return id;
     }

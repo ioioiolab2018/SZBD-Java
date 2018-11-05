@@ -18,7 +18,8 @@ public class Addres {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "addres_Sequence")
+    @SequenceGenerator(name = "addres_Sequence", sequenceName = "ADDRES_SEQ")
     public Long getId() {
         return id;
     }

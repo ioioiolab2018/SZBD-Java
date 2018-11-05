@@ -15,7 +15,8 @@ public class Proposal {
     private String shortAnswer;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "proposal_Sequence")
+    @SequenceGenerator(name = "proposal_Sequence", sequenceName = "PROPOSAL_SEQ")
     public Long getId() {
         return id;
     }
