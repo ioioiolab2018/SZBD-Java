@@ -7,10 +7,14 @@ import pl.szbd.virtual.university.domain.commons.repository.PersonRepository;
 
 @Service
 public class PersonService {
+    private final PersonRepository personRepository;
+
     @Autowired
-    private PersonRepository personRepository;
+    public PersonService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     public Person getPerson(String pesel) {
-        return personRepository.findOne(pesel);
+        return personRepository.getOne(pesel);
     }
 }

@@ -8,9 +8,10 @@ import java.util.Date;
 @Entity(name = "APP_USERS")
 public class User {
     private Long id;
-    private String login;
+    private String username;
     private String password;
     private Date lastLogin;
+    private String personId;
 
     @Id
     public Long getId() {
@@ -22,12 +23,12 @@ public class User {
     }
 
     @Column(name = "LOGIN", unique = true)
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Column(name = "PASSWORD")
@@ -48,12 +49,23 @@ public class User {
         this.lastLogin = date;
     }
 
+    @Column(name = "PERSON_ID")
+    public String getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(String personId) {
+        this.personId = personId;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", lastLogin=" + lastLogin +
-                '}';
+        return "{ " +
+                "id: " + id +
+                ", username: '" + username + '\'' +
+                ", password: '" + password + '\'' +
+                ", lastLogin: " + lastLogin +
+                ", personId: '" + personId + '\'' +
+                " }";
     }
 }

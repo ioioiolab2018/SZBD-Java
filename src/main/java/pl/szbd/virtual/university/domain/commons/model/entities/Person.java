@@ -1,5 +1,6 @@
 package pl.szbd.virtual.university.domain.commons.model.entities;
 
+import pl.szbd.virtual.university.domain.commons.model.enums.RoleType;
 import pl.szbd.virtual.university.domain.commons.model.enums.SexEnum;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Person {
     private String motherName;
     private SexEnum sex;
     private String pesel;
+    private RoleType role;
 
     @Basic
     @Column(name = "NAME")
@@ -107,6 +109,16 @@ public class Person {
 
     public void setPesel(String pesel) {
         this.pesel = pesel;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ROLE")
+    public RoleType getRole() {
+        return role;
+    }
+
+    public void setRole(RoleType role) {
+        this.role = role;
     }
 
     @Override
