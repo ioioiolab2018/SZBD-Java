@@ -5,6 +5,7 @@ import pl.szbd.virtual.university.domain.commons.model.enums.StudentStatusEnum;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity(name = "STUDENTS")
 @PrimaryKeyJoinColumn(name = "student_id")
@@ -18,6 +19,24 @@ public class Student extends Person {
     private Integer semester;
     private Integer ectsPoints;
     private StudentStatusEnum status;
+    private Set<StudentGroup> studentGroups;
+
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "Groups_to_students",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id")
+    )
+    public Set<StudentGroup> getStudentGroups() {
+        return studentGroups;
+    }
+
+    public void setStudentGroups(Set<StudentGroup> studentGroups) {
+        this.studentGroups = studentGroups;
+    }
 
     @Basic
     @Column(name = "LAST_AVERAGE")

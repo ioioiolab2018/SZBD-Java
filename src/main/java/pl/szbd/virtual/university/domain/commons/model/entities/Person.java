@@ -1,5 +1,6 @@
 package pl.szbd.virtual.university.domain.commons.model.entities;
 
+import org.hibernate.validator.constraints.pl.PESEL;
 import pl.szbd.virtual.university.domain.commons.model.enums.RoleType;
 import pl.szbd.virtual.university.domain.commons.model.enums.SexEnum;
 
@@ -102,6 +103,7 @@ public class Person {
     }
 
     @Id
+    @PESEL
     @Column(name = "PESEL")
     public String getPesel() {
         return pesel;

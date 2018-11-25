@@ -1,25 +1,38 @@
 package pl.szbd.virtual.university.domain.commons.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.validator.constraints.pl.PESEL;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "APP_USERS")
 public class User {
-    private Long id;
+    private String id;
+    private Person person;
     private String username;
     private String password;
     private Date lastLogin;
-    private String personId;
+
 
     @Id
-    public Long getId() {
+    @PESEL
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "PESEL")
+    @MapsId
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Column(name = "LOGIN", unique = true)
@@ -49,23 +62,15 @@ public class User {
         this.lastLogin = date;
     }
 
-    @Column(name = "PERSON_ID")
-    public String getPersonId() {
-        return personId;
-    }
 
-    public void setPersonId(String personId) {
-        this.personId = personId;
-    }
 
     @Override
     public String toString() {
         return "{ " +
-                "id: " + id +
                 ", username: '" + username + '\'' +
                 ", password: '" + password + '\'' +
                 ", lastLogin: " + lastLogin +
-                ", personId: '" + personId + '\'' +
+                ", personId: '" +  this.person.getPesel()+ '\'' +
                 " }";
     }
 }

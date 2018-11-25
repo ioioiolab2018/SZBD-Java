@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserService {
     }
 
     private List<SimpleGrantedAuthority> getAuthority(User user) {
-        Person person = personService.getPerson(user.getPersonId());
+        Person person = personService.getPerson(user.getId());
         logger.debug(person.toString());
         return Collections.singletonList(new SimpleGrantedAuthority(person.getRole().toString()));
     }
