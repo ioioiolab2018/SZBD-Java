@@ -1,4 +1,4 @@
-package pl.szbd.virtual.university.domain.employee;
+package pl.szbd.virtualuniversity.domain.employee;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

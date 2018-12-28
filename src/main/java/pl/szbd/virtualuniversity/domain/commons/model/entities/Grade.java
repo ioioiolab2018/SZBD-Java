@@ -1,6 +1,6 @@
-package pl.szbd.virtual.university.domain.commons.model.entities;
+package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
-import pl.szbd.virtual.university.domain.commons.model.enums.GradeTypeEnum;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.GradeTypeEnum;
 
 import javax.persistence.*;
 import java.util.Date;

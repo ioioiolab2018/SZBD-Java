@@ -1,6 +1,6 @@
-package pl.szbd.virtual.university.domain.commons.model.entities;
+package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
-import pl.szbd.virtual.university.domain.commons.model.enums.AcademicDegreeEnum;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.AcademicDegreeEnum;
 
 import javax.persistence.*;
 import java.util.Date;

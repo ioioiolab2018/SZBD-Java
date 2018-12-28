@@ -1,8 +1,8 @@
-package pl.szbd.virtual.university.domain.commons.model.entities;
+package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
 
-import pl.szbd.virtual.university.domain.commons.model.enums.ConcactType2Enum;
-import pl.szbd.virtual.university.domain.commons.model.enums.ContactTypeEnum;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.ConcactType2Enum;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.ContactTypeEnum;
 
 import javax.persistence.*;
 

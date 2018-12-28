@@ -1,7 +1,7 @@
-package pl.szbd.virtual.university.domain.commons.model.entities;
+package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
 
-import pl.szbd.virtual.university.domain.commons.model.enums.StudentStatusEnum;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.StudentStatusEnum;
 
 import javax.persistence.*;
 import java.util.Date;

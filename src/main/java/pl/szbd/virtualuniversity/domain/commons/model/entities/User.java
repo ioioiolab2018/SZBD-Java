@@ -1,4 +1,4 @@
-package pl.szbd.virtual.university.domain.commons.model.entities;
+package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

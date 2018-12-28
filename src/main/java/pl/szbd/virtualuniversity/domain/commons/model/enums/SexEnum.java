@@ -1,4 +1,4 @@
-package pl.szbd.virtual.university.domain.commons.model.enums;
+package pl.szbd.virtualuniversity.domain.commons.model.enums;
 
 public enum SexEnum {
     MALE, FEMALE
