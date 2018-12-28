@@ -9,8 +9,6 @@ import java.util.Date;
 @Entity(name = "STUDENTS")
 @PrimaryKeyJoinColumn(name = "student_id")
 public class Student extends Person {
-
-
     private Float lastAverage;
     private Date startDate;
     private Date endDate;

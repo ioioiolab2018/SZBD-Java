@@ -7,27 +7,28 @@ import java.util.Date;
 
 @Entity(name = "APP_USERS")
 public class User {
-    private Long id;
-    private String login;
+    private String pesel;
+    private String username;
     private String password;
     private Date lastLogin;
 
     @Id
-    public Long getId() {
-        return id;
+    @Column(name = "PESEL", unique = true)
+    public String getPesel() {
+        return pesel;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPesel(String pesel) {
+        this.pesel = pesel;
     }
 
-    @Column(name = "LOGIN", unique = true)
-    public String getLogin() {
-        return login;
+    @Column(name = "USERNAME", unique = true)
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Column(name = "PASSWORD")
@@ -51,7 +52,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "login='" + login + '\'' +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", lastLogin=" + lastLogin +
                 '}';
