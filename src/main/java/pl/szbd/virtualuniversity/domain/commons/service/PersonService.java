@@ -19,6 +19,6 @@ public class PersonService {
 
     public Person getPersonByUsername(String username) {
         User user = userService.getUserByUsername(username);
-        return personRepository.findOne(user.getPesel());
+        return personRepository.findOne(user.getPersonId());
     }
 }

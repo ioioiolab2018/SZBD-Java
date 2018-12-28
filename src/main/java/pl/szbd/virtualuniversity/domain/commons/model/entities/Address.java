@@ -4,8 +4,8 @@ import pl.szbd.virtualuniversity.domain.commons.model.enums.AddressTypeEnum;
 
 import javax.persistence.*;
 
-@Entity(name = "ADDRESES")
-public class Addres {
+@Entity(name = "ADDRESSES")
+public class Address {
 
     private Long id;
     private Person person;
@@ -99,7 +99,7 @@ public class Addres {
 
     @Override
     public String toString() {
-        return "Addres{" +
+        return "Address{" +
                 "id=" + id +
                 ", person=" + person +
                 ", town='" + town + '\'' +

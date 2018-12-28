@@ -7,19 +7,19 @@ import java.util.Date;
 
 @Entity(name = "APP_USERS")
 public class User {
-    private String pesel;
+    private String personId;
     private String username;
     private String password;
     private Date lastLogin;
 
     @Id
-    @Column(name = "PESEL", unique = true)
-    public String getPesel() {
-        return pesel;
+    @Column(name = "PERSON_ID", unique = true)
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setPesel(String pesel) {
-        this.pesel = pesel;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
     @Column(name = "USERNAME", unique = true)
@@ -54,6 +54,7 @@ public class User {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", person_id='" + personId + '\'' +
                 ", lastLogin=" + lastLogin +
                 '}';
     }

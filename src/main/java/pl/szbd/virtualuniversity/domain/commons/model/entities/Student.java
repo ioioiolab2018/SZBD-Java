@@ -7,8 +7,9 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "STUDENTS")
-@PrimaryKeyJoinColumn(name = "student_id")
-public class Student extends Person {
+public class Student {
+    private long index;
+    private String personId;
     private Float lastAverage;
     private Date startDate;
     private Date endDate;
@@ -16,6 +17,25 @@ public class Student extends Person {
     private Integer semester;
     private Integer ectsPoints;
     private StudentStatusEnum status;
+
+    @Id
+    @Column(name = "STUDENT_INDEX")
+    public long getIndex() {
+        return index;
+    }
+
+    public void setIndex(long index) {
+        this.index = index;
+    }
+
+    @Column(name = "PERSON_ID")
+    public String getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(String personId) {
+        this.personId = personId;
+    }
 
     @Basic
     @Column(name = "LAST_AVERAGE")

@@ -1,22 +1,35 @@
 package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
-import pl.szbd.virtualuniversity.domain.commons.model.enums.SexEnum;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.RoleType;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.SexType;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(name = "PERSONS")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
+    private String pesel;
     private String name;
-    private String name2;
+    private String secondName;
     private String surname;
     private Date birthDate;
-    private String birthplace;
+    private String birthPlace;
     private String fatherName;
     private String motherName;
-    private SexEnum sex;
-    private String pesel;
+    private SexType sex;
+    private RoleType role;
+
+
+    @Id
+    @Column(name = "PESEL")
+    public String getPesel() {
+        return pesel;
+    }
+
+    public void setPesel(String pesel) {
+        this.pesel = pesel;
+    }
 
     @Basic
     @Column(name = "NAME")
@@ -30,12 +43,12 @@ public class Person {
 
     @Basic
     @Column(name = "NAME2")
-    public String getName2() {
-        return name2;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setName2(String name2) {
-        this.name2 = name2;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     @Basic
@@ -60,12 +73,12 @@ public class Person {
 
     @Basic
     @Column(name = "BIRTHPLACE")
-    public String getBirthplace() {
-        return birthplace;
+    public String getBirthPlace() {
+        return birthPlace;
     }
 
-    public void setBirthplace(String birthplace) {
-        this.birthplace = birthplace;
+    public void setBirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
     }
 
     @Basic
@@ -88,25 +101,24 @@ public class Person {
         this.motherName = motherName;
     }
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "SEX")
-    public SexEnum getSex() {
+    public SexType getSex() {
         return sex;
     }
 
-    public void setSex(SexEnum sex) {
+    public void setSex(SexType sex) {
         this.sex = sex;
     }
 
-    @Id
-    @Column(name = "PESEL")
-    public String getPesel() {
-        return pesel;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ROLE")
+    public RoleType getRole() {
+        return role;
     }
 
-    public void setPesel(String pesel) {
-        this.pesel = pesel;
+    public void setRole(RoleType role) {
+        this.role = role;
     }
 
     @Override
@@ -116,24 +128,24 @@ public class Person {
 
         Person that = (Person) o;
 
-        return (name != null ? name.equals(that.name) : that.name == null) &&
-                (name2 != null ? name2.equals(that.name2) : that.name2 == null) &&
-                (surname != null ? surname.equals(that.surname) : that.surname == null) &&
-                (birthDate != null ? birthDate.equals(that.birthDate) : that.birthDate == null) &&
-                (birthplace != null ? birthplace.equals(that.birthplace) : that.birthplace == null) &&
-                (fatherName != null ? fatherName.equals(that.fatherName) : that.fatherName == null) &&
-                (motherName != null ? motherName.equals(that.motherName) : that.motherName == null) &&
-                (sex != null ? sex.equals(that.sex) : that.sex == null) &&
-                (pesel != null ? pesel.equals(that.pesel) : that.pesel == null);
+        return (Objects.equals(name, that.name)) &&
+                (Objects.equals(secondName, that.secondName)) &&
+                (Objects.equals(surname, that.surname)) &&
+                (Objects.equals(birthDate, that.birthDate)) &&
+                (Objects.equals(birthPlace, that.birthPlace)) &&
+                (Objects.equals(fatherName, that.fatherName)) &&
+                (Objects.equals(motherName, that.motherName)) &&
+                (Objects.equals(sex, that.sex)) &&
+                (Objects.equals(pesel, that.pesel));
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (name2 != null ? name2.hashCode() : 0);
+        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
-        result = 31 * result + (birthplace != null ? birthplace.hashCode() : 0);
+        result = 31 * result + (birthPlace != null ? birthPlace.hashCode() : 0);
         result = 31 * result + (fatherName != null ? fatherName.hashCode() : 0);
         result = 31 * result + (motherName != null ? motherName.hashCode() : 0);
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
@@ -145,10 +157,10 @@ public class Person {
     public String toString() {
         return "{ " +
                 "name: '" + name + '\'' +
-                ", name2: '" + name2 + '\'' +
+                ", secondName: '" + secondName + '\'' +
                 ", surname: '" + surname + '\'' +
                 ", birthDate: " + birthDate +
-                ", birthplace: '" + birthplace + '\'' +
+                ", birthPlace: '" + birthPlace + '\'' +
                 ", fatherName: '" + fatherName + '\'' +
                 ", motherName: '" + motherName + '\'' +
                 ", sex: '" + sex + '\'' +

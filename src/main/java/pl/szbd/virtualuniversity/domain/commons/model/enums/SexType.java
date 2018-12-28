@@ -1,5 +1,5 @@
 package pl.szbd.virtualuniversity.domain.commons.model.enums;
 
-public enum SexEnum {
+public enum SexType {
     MALE, FEMALE
 }
