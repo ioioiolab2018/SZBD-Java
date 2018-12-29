@@ -6,16 +6,18 @@ import java.util.Date;
 @Entity(name = "PROPOSALS")
 public class Proposal {
     private Long id;
-    private Person person;
+    private String personId;
     private String topic;
     private String content;
-    private String answer;
     private Date submissionDate;
-    private Date answerDate;
     private String shortAnswer;
+    private String answer;
+    private Date answerDate;
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "proposalSeq", sequenceName = "PROPOSALS_SEQ")
+    @GeneratedValue(generator = "proposalSeq", strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     public Long getId() {
         return id;
     }
@@ -24,14 +26,13 @@ public class Proposal {
         this.id = id;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERSON_ID")
-    public Person getPerson() {
-        return person;
+    @Column(name = "PERSON_ID")
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
     @Column(name = "TOPIC")
@@ -43,24 +44,14 @@ public class Proposal {
         this.topic = topic;
     }
 
-    @Column(name = "CONTENT")
     @Lob
+    @Column(name = "CONTENT")
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @Column(name = "ANSWER")
-    @Lob
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
     }
 
     @Column(name = "SUBMISSION_DATE")
@@ -72,15 +63,6 @@ public class Proposal {
         this.submissionDate = submissionDate;
     }
 
-    @Column(name = "ANSWER_DATE")
-    public Date getAnswerDate() {
-        return answerDate;
-    }
-
-    public void setAnswerDate(Date answerDate) {
-        this.answerDate = answerDate;
-    }
-
     @Column(name = "SHORT_ANSWER")
     public String getShortAnswer() {
         return shortAnswer;
@@ -90,17 +72,36 @@ public class Proposal {
         this.shortAnswer = shortAnswer;
     }
 
+    @Lob
+    @Column(name = "ANSWER")
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    @Column(name = "ANSWER_DATE")
+    public Date getAnswerDate() {
+        return answerDate;
+    }
+
+    public void setAnswerDate(Date answerDate) {
+        this.answerDate = answerDate;
+    }
+
     @Override
     public String toString() {
         return "{ " +
                 "id: " + id +
-                ", person: " + person +
+                ", personId: " + personId +
                 ", topic: '" + topic + '\'' +
                 ", content: '" + content + '\'' +
-                ", answer: '" + answer + '\'' +
                 ", submissionDate: " + submissionDate +
-                ", answerDate: " + answerDate +
                 ", shortAnswer: '" + shortAnswer + '\'' +
+                ", answer: '" + answer + '\'' +
+                ", answerDate: " + answerDate +
                 " }";
     }
 }
