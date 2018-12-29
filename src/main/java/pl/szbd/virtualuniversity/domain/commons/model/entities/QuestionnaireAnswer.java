@@ -1,28 +1,42 @@
 package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(name = "QUESTIONNAIRE_ANSWERS")
-public class QuestionnaireAnswer {
-    private Long id;
+public class QuestionnaireAnswer implements Serializable {
+    @EmbeddedId
+    private QuestionnaireAnswerIdentity questionnaireAnswerIdentity;
+    @Lob
+    @Column(name = "ANSWER")
     private String answer;
-    private Questionnaire questionnaire;
-    private Person person;
+    @Column(name = "DT")
     private Date date;
 
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
+    public QuestionnaireAnswer() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public QuestionnaireAnswer(QuestionnaireAnswerIdentity questionnaireAnswerIdentity, String answer, Date date) {
+        this.questionnaireAnswerIdentity = questionnaireAnswerIdentity;
+        this.answer = answer;
+        this.date = date;
     }
 
-    @Column(name = "ANSWER")
-    @Lob
+    public QuestionnaireAnswer(String personId, Long questionnaireId, String answer, Date date) {
+        this.questionnaireAnswerIdentity = new QuestionnaireAnswerIdentity(personId, questionnaireId);
+        this.answer = answer;
+        this.date = date;
+    }
+
+    public QuestionnaireAnswerIdentity getQuestionnaireAnswerIdentity() {
+        return questionnaireAnswerIdentity;
+    }
+
+    public void setQuestionnaireAnswerIdentity(QuestionnaireAnswerIdentity questionnaireAnswerIdentity) {
+        this.questionnaireAnswerIdentity = questionnaireAnswerIdentity;
+    }
+
     public String getAnswer() {
         return answer;
     }
@@ -31,27 +45,6 @@ public class QuestionnaireAnswer {
         this.answer = answer;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "QUESTIONNAIRE_ID")
-    public Questionnaire getQuestionnaire() {
-        return questionnaire;
-    }
-
-    public void setQuestionnaire(Questionnaire questionnaire) {
-        this.questionnaire = questionnaire;
-    }
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERSON_ID")
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    @Column(name = "DT")
     public Date getDate() {
         return date;
     }
@@ -62,12 +55,11 @@ public class QuestionnaireAnswer {
 
     @Override
     public String toString() {
-        return "{ " +
-                "id: " + id +
-                ", answer: '" + answer + '\'' +
-                ", questionnaire: " + questionnaire +
-                ", person: " + person +
-                ", date: " + date +
-                " }";
+        return "QuestionnaireAnswer{" +
+                "questionnaireId=\'" + questionnaireAnswerIdentity.getQuestionnaireId() + '\'' +
+                ", personId=\'" + questionnaireAnswerIdentity.getPersonId() + '\'' +
+                ", answer='" + answer + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

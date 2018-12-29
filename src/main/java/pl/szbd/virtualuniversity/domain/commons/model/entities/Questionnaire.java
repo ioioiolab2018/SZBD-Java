@@ -1,12 +1,9 @@
 package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "QUESTIONNAIRE")
+@Entity(name = "QUESTIONNAIRES")
 public class Questionnaire {
     private Long id;
     private String name;
@@ -17,7 +14,9 @@ public class Questionnaire {
     private String single;
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "questionnaireSeq", sequenceName = "QUESTIONNAIRES_SEQ")
+    @GeneratedValue(generator = "questionnaireSeq", strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     public Long getId() {
         return id;
     }
