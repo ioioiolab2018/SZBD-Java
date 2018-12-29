@@ -6,14 +6,13 @@ import pl.szbd.virtualuniversity.domain.commons.model.TableData;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.Proposal;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.User;
 import pl.szbd.virtualuniversity.domain.commons.repository.ProposalRepository;
+import pl.szbd.virtualuniversity.domain.commons.utils.DateFormatter;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ProposalService {
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     @Autowired
     private ProposalRepository proposalRepository;
     @Autowired
@@ -25,8 +24,8 @@ public class ProposalService {
                 .stream().map(element -> new TableData(
                         element.getId(),
                         element.getTopic(),
-                        formatter.format(element.getSubmissionDate()),
-                        element.getAnswerDate() != null ? formatter.format(element.getAnswerDate()) : "",
+                        DateFormatter.getFormatter().format(element.getSubmissionDate()),
+                        element.getAnswerDate() != null ? DateFormatter.getFormatter().format(element.getAnswerDate()) : "",
                         element.getShortAnswer() != null ? element.getShortAnswer() : ""))
                 .collect(Collectors.toList());
     }
