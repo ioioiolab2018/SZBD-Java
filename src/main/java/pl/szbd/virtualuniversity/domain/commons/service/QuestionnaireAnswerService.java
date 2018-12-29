@@ -14,4 +14,8 @@ public class QuestionnaireAnswerService {
     public QuestionnaireAnswer getQuestionnaireAnswer(Long questionnaireId, String personId) {
         return questionnaireAnswerRepository.findOne(new QuestionnaireAnswerIdentity(personId, questionnaireId));
     }
+
+    public void saveQuestionnaireAnswer(QuestionnaireAnswer questionnaireAnswer) {
+        questionnaireAnswerRepository.save(questionnaireAnswer);
+    }
 }

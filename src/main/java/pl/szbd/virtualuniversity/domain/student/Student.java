@@ -3,8 +3,10 @@ package pl.szbd.virtualuniversity.domain.student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.szbd.virtualuniversity.domain.commons.model.TableData;
+import pl.szbd.virtualuniversity.domain.commons.model.entities.QuestionnaireAnswer;
 import pl.szbd.virtualuniversity.domain.student.model.QuestionnaireView;
 import pl.szbd.virtualuniversity.domain.student.model.StudentInformation;
 import pl.szbd.virtualuniversity.domain.student.service.QuestionnaireService;
@@ -38,5 +40,10 @@ public class Student {
     @GetMapping("/questionnaire/{questionnaireId}")
     public QuestionnaireView getStudentQuestionnaires(@PathVariable Long questionnaireId, @RequestParam(value = "student", required = false) String username) {
         return questionnaireService.getStudentQuestionnaire(questionnaireId, username);
+    }
+
+    @PostMapping(value = "/questionnaire/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void savePersonInformation(@RequestBody QuestionnaireAnswer questionnaireAnswer) {
+        questionnaireService.saveQuestionnaireAnswer(questionnaireAnswer);
     }
 }

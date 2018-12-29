@@ -62,4 +62,8 @@ public class QuestionnaireService {
         }
         return available;
     }
+
+    public void saveQuestionnaireAnswer(QuestionnaireAnswer questionnaireAnswer) {
+        questionnaireAnswerService.saveQuestionnaireAnswer(questionnaireAnswer);
+    }
 }

@@ -56,8 +56,7 @@ public class QuestionnaireAnswer implements Serializable {
     @Override
     public String toString() {
         return "QuestionnaireAnswer{" +
-                "questionnaireId=\'" + questionnaireAnswerIdentity.getQuestionnaireId() + '\'' +
-                ", personId=\'" + questionnaireAnswerIdentity.getPersonId() + '\'' +
+                "questionnaireAnswerIdentity=" + questionnaireAnswerIdentity +
                 ", answer='" + answer + '\'' +
                 ", date=" + date +
                 '}';

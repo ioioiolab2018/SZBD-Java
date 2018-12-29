@@ -15,6 +15,9 @@ public class QuestionnaireAnswerIdentity implements Serializable {
     @Column(name = "QUESTIONNAIRE_ID")
     private Long questionnaireId;
 
+    public QuestionnaireAnswerIdentity() {
+    }
+
     public QuestionnaireAnswerIdentity(String personId, Long questionnaireId) {
         this.personId = personId;
         this.questionnaireId = questionnaireId;
@@ -48,5 +51,13 @@ public class QuestionnaireAnswerIdentity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(personId, questionnaireId);
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionnaireAnswerIdentity{" +
+                "personId='" + personId + '\'' +
+                ", questionnaireId=" + questionnaireId +
+                '}';
     }
 }
