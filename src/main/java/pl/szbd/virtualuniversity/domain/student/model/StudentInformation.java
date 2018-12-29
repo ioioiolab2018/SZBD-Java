@@ -1,8 +1,9 @@
 package pl.szbd.virtualuniversity.domain.student.model;
 
 import pl.szbd.virtualuniversity.domain.commons.model.enums.SexType;
-import pl.szbd.virtualuniversity.domain.commons.model.enums.StudentStatusEnum;
-import pl.szbd.virtualuniversity.domain.commons.model.enums.StudyTypeEnum;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.StudentStatus;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.StudyMode;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.StudyType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,9 +28,9 @@ public class StudentInformation {
     private Long semester;
     private String faculty;
     private String studyField;
-    private String studyMode;
-    private StudyTypeEnum type;
-    private StudentStatusEnum status;
+    private StudyMode studyMode;
+    private StudyType type;
+    private StudentStatus status;
     private Long ectsPoints;
     private Date startDate;
     private Date endDate;
@@ -198,32 +199,33 @@ public class StudentInformation {
         this.studyField = studyField;
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "STUDY_MODE")
-    public String getStudyMode() {
+    public StudyMode getStudyMode() {
         return studyMode;
     }
 
-    public void setStudyMode(String studyMode) {
+    public void setStudyMode(StudyMode studyMode) {
         this.studyMode = studyMode;
     }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE")
-    public StudyTypeEnum getType() {
+    public StudyType getType() {
         return type;
     }
 
-    public void setType(StudyTypeEnum type) {
+    public void setType(StudyType type) {
         this.type = type;
     }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
-    public StudentStatusEnum getStatus() {
+    public StudentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(StudentStatusEnum status) {
+    public void setStatus(StudentStatus status) {
         this.status = status;
     }
 

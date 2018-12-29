@@ -1,7 +1,7 @@
 package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
 
-import pl.szbd.virtualuniversity.domain.commons.model.enums.StudentStatusEnum;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.StudentStatus;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,7 +16,7 @@ public class Student {
     private Integer studyYear;
     private Integer semester;
     private Integer ectsPoints;
-    private StudentStatusEnum status;
+    private StudentStatus status;
 
     @Id
     @Column(name = "STUDENT_INDEX")
@@ -101,11 +101,11 @@ public class Student {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
-    public StudentStatusEnum getStatus() {
+    public StudentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(StudentStatusEnum status) {
+    public void setStatus(StudentStatus status) {
         this.status = status;
     }
 

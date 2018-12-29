@@ -1,6 +1,6 @@
 package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
-import pl.szbd.virtualuniversity.domain.commons.model.enums.StudyTypeEnum;
+import pl.szbd.virtualuniversity.domain.commons.model.enums.StudyType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +14,7 @@ public class StudentGroup {
     private String faculty;
     private String studyField;
     private String studyMode;
-    private StudyTypeEnum type;
+    private StudyType type;
     private Date startDate;
     private Date endDate;
 
@@ -56,11 +56,11 @@ public class StudentGroup {
     }
 
     @Column(name = "TYPE")
-    public StudyTypeEnum getType() {
+    public StudyType getType() {
         return type;
     }
 
-    public void setType(StudyTypeEnum type) {
+    public void setType(StudyType type) {
         this.type = type;
     }
 
