@@ -1,4 +1,4 @@
-package pl.szbd.virtual.university.config;
+package pl.szbd.virtualuniversity.config;
 
 import io.jsonwebtoken.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,15 +9,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static pl.szbd.virtual.university.config.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
-import static pl.szbd.virtual.university.config.Constants.AUTHORITIES_KEY;
-import static pl.szbd.virtual.university.config.Constants.SIGNING_KEY;
+import static pl.szbd.virtualuniversity.config.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
+import static pl.szbd.virtualuniversity.config.Constants.AUTHORITIES_KEY;
+import static pl.szbd.virtualuniversity.config.Constants.SIGNING_KEY;
 
 @Component
 public class TokenProvider implements Serializable {
@@ -72,12 +73,12 @@ public class TokenProvider implements Serializable {
         final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
         final Claims claims = claimsJws.getBody();
 
-        final Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
+//        final Collection<? extends GrantedAuthority> authorities =
+//                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+//                        .map(SimpleGrantedAuthority::new)
+//                        .collect(Collectors.toList());
 
-        return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
+        return new UsernamePasswordAuthenticationToken(userDetails, "", new ArrayList<>());
     }
 
 }

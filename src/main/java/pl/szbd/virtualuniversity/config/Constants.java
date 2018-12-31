@@ -1,4 +1,4 @@
-package pl.szbd.virtual.university.config;
+package pl.szbd.virtualuniversity.config;
 
 class Constants {
     static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60 * 60;
