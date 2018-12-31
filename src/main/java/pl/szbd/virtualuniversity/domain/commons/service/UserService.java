@@ -1,16 +1,11 @@
-package pl.szbd.virtualuniversity.domain.commons.service;
+package pl.szbd.virtual.university.domain.commons.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import pl.szbd.virtualuniversity.domain.commons.model.entities.User;
-import pl.szbd.virtualuniversity.domain.commons.repository.UserRepository;
+import pl.szbd.virtual.university.domain.commons.model.entities.User;
 
-@Service
-public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+public interface UserService {
+    public User findUserByUsername(String username);
 
-    public User getUserByUsername(String username) {
-        return userRepository.getUserByUsername(username);
-    }
+    public boolean deleteUserByUsername(String username);
+
+    public User saveUser(User user);
 }
