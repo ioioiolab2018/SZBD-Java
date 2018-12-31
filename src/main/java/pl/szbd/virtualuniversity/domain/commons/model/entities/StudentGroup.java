@@ -8,8 +8,6 @@ import java.util.Date;
 @Entity(name = "STUDENT_GROUPS")
 public class StudentGroup {
     private Long id;
-    private Integer studyYear;
-    private Integer semester;
     private String faculty;
     private String studyField;
     private String studyMode;
@@ -25,24 +23,6 @@ public class StudentGroup {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Column
-    public Integer getStudyYear() {
-        return studyYear;
-    }
-
-    public void setStudyYear(Integer studyYear) {
-        this.studyYear = studyYear;
-    }
-
-    @Column
-    public Integer getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Integer semester) {
-        this.semester = semester;
     }
 
     @Column(name = "FACULTY")
@@ -111,5 +91,4 @@ public class StudentGroup {
                 ", endDate=" + endDate +
                 '}';
     }
-
 }

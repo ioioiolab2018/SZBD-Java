@@ -11,9 +11,6 @@ public class StudySubject {
     private Integer semester;
     private String description;
     private Lecturer lecturer;
-    private StudentGroup studentGroup;
-
-
 
     @Id
     public Long getId() {
@@ -22,16 +19,6 @@ public class StudySubject {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "GroupSemesterId")
-    public StudentGroup getStudentGroup() {
-        return studentGroup;
-    }
-
-    public void setStudentGroup(StudentGroup studentGroup) {
-        this.studentGroup = studentGroup;
     }
 
     @Column(name = "NAME")
