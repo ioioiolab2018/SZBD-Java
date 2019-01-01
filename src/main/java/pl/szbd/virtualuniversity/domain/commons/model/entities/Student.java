@@ -10,15 +10,17 @@ import java.util.Date;
 public class Student {
     private long index;
     private String personId;
-    private Float lastAverage;
+    private Integer ectsPoints;
     private Date startDate;
     private Date endDate;
-    private Integer studyYear;
+    private Float lastAverage;
     private Integer semester;
-    private Integer ectsPoints;
     private StudentStatus status;
+    private Integer studyYear;
 
     @Id
+    @SequenceGenerator(name = "studentSeq", sequenceName = "STUDENTS_SEQ")
+    @GeneratedValue(generator = "studentSeq", strategy = GenerationType.AUTO)
     @Column(name = "STUDENT_INDEX")
     public long getIndex() {
         return index;
@@ -38,13 +40,13 @@ public class Student {
     }
 
     @Basic
-    @Column(name = "LAST_AVERAGE")
-    public Float getLastAverage() {
-        return lastAverage;
+    @Column(name = "ECTS_POINTS")
+    public Integer getEctsPoints() {
+        return ectsPoints;
     }
 
-    public void setLastAverage(Float lastAverage) {
-        this.lastAverage = lastAverage;
+    public void setEctsPoints(Integer ectsPoints) {
+        this.ectsPoints = ectsPoints;
     }
 
     @Basic
@@ -57,7 +59,6 @@ public class Student {
         this.startDate = startDate;
     }
 
-
     @Basic
     @Column(name = "END_DATE")
     public Date getEndDate() {
@@ -69,13 +70,13 @@ public class Student {
     }
 
     @Basic
-    @Column(name = "STUDY_YEAR")
-    public Integer getStudyYear() {
-        return studyYear;
+    @Column(name = "LAST_AVERAGE")
+    public Float getLastAverage() {
+        return lastAverage;
     }
 
-    public void setStudyYear(Integer studyYear) {
-        this.studyYear = studyYear;
+    public void setLastAverage(Float lastAverage) {
+        this.lastAverage = lastAverage;
     }
 
     @Basic
@@ -88,17 +89,6 @@ public class Student {
         this.semester = semester;
     }
 
-    @Basic
-    @Column(name = "ECTS_POINTS")
-    public Integer getEctsPoints() {
-        return ectsPoints;
-    }
-
-    public void setEctsPoints(Integer ectsPoints) {
-        this.ectsPoints = ectsPoints;
-    }
-
-
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     public StudentStatus getStatus() {
@@ -109,18 +99,28 @@ public class Student {
         this.status = status;
     }
 
+    @Basic
+    @Column(name = "STUDY_YEAR")
+    public Integer getStudyYear() {
+        return studyYear;
+    }
+
+    public void setStudyYear(Integer studyYear) {
+        this.studyYear = studyYear;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
-                "lastAverage=" + lastAverage +
+                "index=" + index +
+                ", personId='" + personId + '\'' +
+                ", ectsPoints=" + ectsPoints +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", studyYear=" + studyYear +
+                ", lastAverage=" + lastAverage +
                 ", semester=" + semester +
-                ", ectsPoints=" + ectsPoints +
-                ", status='" + status + '\'' +
+                ", status=" + status +
+                ", studyYear=" + studyYear +
                 '}';
     }
-
-
 }

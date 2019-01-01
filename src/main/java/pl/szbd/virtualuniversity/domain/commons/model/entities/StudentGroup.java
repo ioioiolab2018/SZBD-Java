@@ -1,5 +1,6 @@
 package pl.szbd.virtualuniversity.domain.commons.model.entities;
 
+import pl.szbd.virtualuniversity.domain.commons.model.enums.StudyMode;
 import pl.szbd.virtualuniversity.domain.commons.model.enums.StudyType;
 
 import javax.persistence.Column;
@@ -13,13 +14,15 @@ public class StudentGroup {
     private Long id;
     private String faculty;
     private String studyField;
-    private String studyMode;
+    private StudyMode studyMode;
     private StudyType type;
     private Date startDate;
     private Date endDate;
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "studentGroupSeq", sequenceName = "STUDENT_GROUPS_SEQ")
+    @GeneratedValue(generator = "studentGroupSeq", strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     public Long getId() {
         return id;
     }
@@ -46,12 +49,13 @@ public class StudentGroup {
         this.studyField = studyField;
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "STUDY_MODE")
-    public String getStudyMode() {
+    public StudyMode getStudyMode() {
         return studyMode;
     }
 
-    public void setStudyMode(String studyMode) {
+    public void setStudyMode(StudyMode studyMode) {
         this.studyMode = studyMode;
     }
 
