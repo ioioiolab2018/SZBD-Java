@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity(name = "LECTURERS")
 public class Lecturer {
-    private long lecturerIndex;
+    private Long index;
     private String personId;
     private AcademicDegreeType academicDegree;
     private String office;
@@ -16,12 +16,12 @@ public class Lecturer {
 
     @Id
     @Column(name = "LECTURER_INDEX")
-    public long getLecturerIndex() {
-        return lecturerIndex;
+    public long getIndex() {
+        return index;
     }
 
-    public void setLecturerIndex(long lecturerIndex) {
-        this.lecturerIndex = lecturerIndex;
+    public void setIndex(long index) {
+        this.index = index;
     }
 
     @Column(name = "PERSON_ID")
@@ -76,7 +76,7 @@ public class Lecturer {
     @Override
     public String toString() {
         return "Lecturer{" +
-                "lecturerIndex=" + lecturerIndex +
+                "index=" + index +
                 ", personId='" + personId + '\'' +
                 ", academicDegree=" + academicDegree +
                 ", office='" + office + '\'' +

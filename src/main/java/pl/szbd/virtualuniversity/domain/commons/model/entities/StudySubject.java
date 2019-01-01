@@ -6,19 +6,40 @@ import javax.persistence.*;
 @Entity(name = "STUDY_SUBJECTS")
 public class StudySubject {
     private Long id;
+    private Long groupId;
+    private Long lecturerId;
     private String name;
-    private Integer ectsValue;
-    private Integer semester;
+    private Long ectsValue;
     private String description;
-    private Lecturer lecturer;
 
     @Id
+    @SequenceGenerator(name = "studySubjectSeq", sequenceName = "STUDY_SUBJECTS_SEQ")
+    @GeneratedValue(generator = "studySubjectSeq", strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Column(name = "GROUP_ID")
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
+    @Column(name = "LECTURER_ID")
+    public Long getLecturerId() {
+        return lecturerId;
+    }
+
+    public void setLecturerId(Long lecturerId) {
+        this.lecturerId = lecturerId;
     }
 
     @Column(name = "NAME")
@@ -31,25 +52,16 @@ public class StudySubject {
     }
 
     @Column(name = "ECTS_VALUE")
-    public Integer getEctsValue() {
+    public Long getEctsValue() {
         return ectsValue;
     }
 
-    public void setEctsValue(Integer ectsValue) {
+    public void setEctsValue(Long ectsValue) {
         this.ectsValue = ectsValue;
     }
 
-    @Column(name = "SEMESTER")
-    public Integer getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
-
-    @Column(name = "DESCRIPTION")
     @Lob
+    @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
     }
@@ -58,24 +70,15 @@ public class StudySubject {
         this.description = description;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "lecturer_id")
-    public Lecturer getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(Lecturer lecturer) {
-        this.lecturer = lecturer;
-    }
-
     @Override
     public String toString() {
         return "StudySubject{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", groupId=" + groupId +
+                ", lecturerId=" + lecturerId +
+                ", name='" + name + '\'' +
                 ", ectsValue=" + ectsValue +
-                ", semester=" + semester +
                 ", description='" + description + '\'' +
-                ", lecturer=" + lecturer +
                 '}';
     }
 }
