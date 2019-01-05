@@ -3,10 +3,7 @@ package pl.szbd.virtualuniversity.domain.commons.model.entities;
 import pl.szbd.virtualuniversity.domain.commons.model.enums.StudyMode;
 import pl.szbd.virtualuniversity.domain.commons.model.enums.StudyType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "STUDENT_GROUPS")
