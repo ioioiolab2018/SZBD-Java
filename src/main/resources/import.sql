@@ -320,3 +320,160 @@ CREATE OR REPLACE FORCE VIEW STUDENT_QUESTIONNAIRES(
         FROM
             questionnaires q;
 COMMENT ON TABLE STUDENT_QUESTIONNAIRES IS 'COMPL="Widok zwracający dane do tabeli ankiet studenta."';
+
+DROP VIEW STUDENT_SUBJECTS;
+CREATE OR REPLACE FORCE VIEW STUDENT_SUBJECTS(
+        id,
+        name,
+        lecturer,
+        ects_value,
+        complete,
+        username,
+        semester
+    ) AS
+        SELECT
+            sub.id,
+            sub.name,
+            lec.academic_degree || ' ' || plec.name || ' ' || plec.surname,
+            sub.ects_value,
+            case
+                when exists (select g.value
+                        from grades g
+                        where g.subject_id = sub.id AND g.student_id(+) = st.student_index AND g.value >= 3)
+                    then 'T'
+                else 'F'
+            end,
+            u.username,
+            stgr.semester
+        FROM
+            student_groups stgr,
+            groups_to_students grtost,
+            students st,
+            persons p,
+            app_users u,
+            study_subjects sub,
+            lecturers lec,
+            persons plec
+        WHERE
+            stgr.id(+) = grtost.group_id
+            AND grtost.student_id(+) = st.student_index
+            AND st.person_id(+) = p.pesel
+            AND p.pesel = u.person_id
+            AND stgr.id = sub.group_id(+)
+            AND sub.lecturer_id = lec.lecturer_index
+            AND lec.person_id = plec.pesel;
+COMMENT ON TABLE STUDENT_SUBJECTS IS 'COMPL="Widok zwracający listę przedmiotów na które uczęszczał student."';
+
+DROP VIEW SEMESTERS;
+CREATE OR REPLACE FORCE VIEW SEMESTERS(
+        id,
+        semester,
+        username
+    ) AS
+        SELECT
+            max(stgr.id),
+            stgr.semester,
+            u.username
+        FROM
+            student_groups stgr,
+            groups_to_students grtost,
+            students st,
+            persons p,
+            app_users u
+        WHERE
+            stgr.id = grtost.group_id
+            AND grtost.student_id = st.student_index
+            AND st.person_id = p.pesel
+            AND p.pesel = u.person_id
+        GROUP BY
+            stgr.semester,
+            u.username
+        ORDER BY semester;
+COMMENT ON TABLE SEMESTERS IS 'COMPL="Widok zwracający semestry na które uczęszczał student."';
+
+CREATE OR REPLACE PACKAGE StudentAverageCalculations IS
+    FUNCTION semesterAverage(p_student_index number, p_group_id number) RETURN number;
+    FUNCTION studyAverage(p_pesel varchar2) RETURN number;
+END StudentAverageCalculations;
+
+CREATE OR REPLACE PACKAGE BODY StudentAverageCalculations IS
+    FUNCTION semesterAverage(p_student_index number, p_group_id number)
+        RETURN number
+    IS
+        cursor grade_cursor is
+            SELECT
+                sub.ects_value,
+                gde.value
+            FROM
+                student_groups stgr,
+                groups_to_students grtost,
+                students st,
+                study_subjects sub,
+                grades gde
+            WHERE
+                stgr.id = grtost.group_id
+                AND grtost.student_id = st.student_index
+                AND stgr.id = sub.group_id
+                AND gde.student_id = st.student_index
+                AND gde.subject_id = sub.id
+                AND st.student_index = p_student_index
+                AND stgr.id = p_group_id;
+        v_return number;
+        v_sum number;
+        v_ects_points_sum number;
+    BEGIN
+        v_sum := 0;
+        v_ects_points_sum := 0;
+        FOR v_rec in grade_cursor
+        LOOP
+            v_sum := v_sum + v_rec.ects_value * v_rec.value;
+            v_ects_points_sum := v_ects_points_sum + v_rec.ects_value;
+        END LOOP;
+        v_return := v_sum / v_ects_points_sum;
+    RETURN v_return;
+    END semesterAverage;
+    FUNCTION studyAverage(p_pesel varchar2)
+        RETURN number
+    IS
+        v_return number;
+    BEGIN
+        v_return := 0;
+    RETURN v_return;
+    END studyAverage;
+END StudentAverageCalculations;
+
+DROP VIEW STUDENT_SEMESTERS;
+CREATE OR REPLACE FORCE VIEW STUDENT_SEMESTERS(
+        id,
+        semester,
+        semester_pass_date,
+        average,
+        username
+    ) AS
+        SELECT
+            stgr.id,
+            stgr.semester,
+            case
+            when not exists (select t_gde.value from grades t_gde where t_gde.student_id=st.student_index and t_gde.value < 3 and t_gde.subject_id = sub.id)
+            then (select max(grade_date) from grades t_gde where t_gde.student_id = st.student_index and t_gde.subject_id = sub.id)
+            else null
+            end as semester_pass_date,
+            StudentAverageCalculations.semesterAverage(st.student_index, stgr.id) as average,
+            u.username
+        FROM
+            student_groups stgr,
+            groups_to_students grtost,
+            students st,
+            persons p,
+            app_users u,
+            study_subjects sub,
+            grades gde
+        WHERE
+            stgr.id = grtost.group_id
+            AND grtost.student_id = st.student_index
+            AND st.person_id = p.pesel
+            AND p.pesel = u.person_id
+            AND stgr.id = sub.group_id
+            AND gde.student_id = st.student_index
+            AND gde.subject_id = sub.id;
+COMMENT ON TABLE STUDENT_SEMESTERS IS 'COMPL="Widok zwracający informacje o semestrach na które uczęszczał student."';
