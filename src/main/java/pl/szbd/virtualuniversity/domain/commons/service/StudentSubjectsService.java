@@ -8,8 +8,8 @@ import pl.szbd.virtualuniversity.domain.commons.model.entities.StudentSubject;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.StudySubject;
 import pl.szbd.virtualuniversity.domain.commons.repository.StudentSubjectRepository;
 import pl.szbd.virtualuniversity.domain.commons.repository.StudySubjectRepository;
-import pl.szbd.virtualuniversity.domain.student.model.StudentSemester;
-import pl.szbd.virtualuniversity.domain.student.repository.StudentSemesterRepository;
+import pl.szbd.virtualuniversity.domain.student.model.Semester;
+import pl.szbd.virtualuniversity.domain.student.repository.SemesterRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,15 +22,15 @@ public class StudentSubjectsService {
     @Autowired
     private StudentSubjectRepository studentSubjectRepository;
     @Autowired
-    private StudentSemesterRepository studentSemesterRepository;
+    private SemesterRepository semesterRepository;
     @Autowired
     private StudySubjectRepository studySubjectRepository;
 
     public ArrayList<SemesterData> getStudentSubjects(String username, String filter) {
-        List<StudentSemester> studentSemesters = studentSemesterRepository.getSemesters(username);
-        if (studentSemesters.size() > 0) {
+        List<Semester> semesters = semesterRepository.getSemesters(username);
+        if (semesters.size() > 0) {
             List<Long> semestersIds =
-                    studentSemesters.stream().map(StudentSemester::getId).collect(Collectors.toList());
+                    semesters.stream().map(Semester::getId).collect(Collectors.toList());
             List<StudentSubject> studentSubjects = studentSubjectRepository.getSubjects(username, semestersIds);
             if (studentSubjects.size() > 0) {
                 ArrayList<SemesterData> semesterData = new ArrayList<>();

@@ -12,6 +12,7 @@ import pl.szbd.virtualuniversity.domain.student.model.StudentInformation;
 import pl.szbd.virtualuniversity.domain.student.service.QuestionnaireService;
 import pl.szbd.virtualuniversity.domain.student.service.StudentInformationService;
 import pl.szbd.virtualuniversity.domain.student.service.StudentQuestionnaireService;
+import pl.szbd.virtualuniversity.domain.student.service.StudentSemesterService;
 
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class Student {
     private StudentQuestionnaireService studentQuestionnaireService;
     @Autowired
     private QuestionnaireService questionnaireService;
+    @Autowired
+    private StudentSemesterService studentSemesterService;
 
     @GetMapping("/student-info/{username}")
     public StudentInformation getStudentInformation(@PathVariable String username) {
@@ -45,5 +48,10 @@ public class Student {
     @PostMapping(value = "/questionnaire/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void savePersonInformation(@RequestBody QuestionnaireAnswer questionnaireAnswer) {
         questionnaireService.saveQuestionnaireAnswer(questionnaireAnswer);
+    }
+
+    @GetMapping("/semesters/{username}")
+    public List<TableData> getStudentSemesters(@PathVariable String username) {
+        return studentSemesterService.getStudentSemesters(username);
     }
 }
