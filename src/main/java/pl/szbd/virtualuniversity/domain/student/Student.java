@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.szbd.virtualuniversity.domain.commons.model.TableData;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.QuestionnaireAnswer;
 import pl.szbd.virtualuniversity.domain.student.model.QuestionnaireView;
+import pl.szbd.virtualuniversity.domain.student.model.StudentGrade;
 import pl.szbd.virtualuniversity.domain.student.model.StudentInformation;
 import pl.szbd.virtualuniversity.domain.student.service.QuestionnaireService;
 import pl.szbd.virtualuniversity.domain.student.service.StudentInformationService;
@@ -36,12 +37,12 @@ public class Student {
     }
 
     @GetMapping("/questionnaires/{username}")
-    public List<TableData> getStudentQuestionnaires(@PathVariable String username, @RequestParam(value = "filter", required = false) String filter) {
+    public List<TableData> getStudentQuestionnaires(@PathVariable String username, @RequestParam(value = "filter") String filter) {
         return studentQuestionnaireService.getStudentQuestionnaires(username, filter);
     }
 
     @GetMapping("/questionnaire/{questionnaireId}")
-    public QuestionnaireView getStudentQuestionnaires(@PathVariable Long questionnaireId, @RequestParam(value = "student", required = false) String username) {
+    public QuestionnaireView getStudentQuestionnaires(@PathVariable Long questionnaireId, @RequestParam(value = "student") String username) {
         return questionnaireService.getStudentQuestionnaire(questionnaireId, username);
     }
 
@@ -53,5 +54,11 @@ public class Student {
     @GetMapping("/semesters/{username}")
     public List<TableData> getStudentSemesters(@PathVariable String username) {
         return studentSemesterService.getStudentSemesters(username);
+    }
+
+    @GetMapping("/grades/{groupId}")
+    public List<StudentGrade> getStudentGrades(@PathVariable Long groupId,
+                                               @RequestParam(value = "username") String username) {
+        return studentSemesterService.getStudentGrades(username, groupId);
     }
 }
