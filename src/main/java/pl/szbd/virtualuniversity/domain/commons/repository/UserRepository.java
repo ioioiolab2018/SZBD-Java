@@ -9,5 +9,5 @@ import pl.szbd.virtualuniversity.domain.commons.model.entities.User;
 public interface UserRepository extends JpaRepository<User, String> {
 
     @Query(value = "SELECT * FROM APP_USERS u WHERE u.USERNAME = ?", nativeQuery = true)
-    User getUserByUsername(String username);
+    User findUserByUsername(String username);
 }
