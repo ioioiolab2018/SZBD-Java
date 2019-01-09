@@ -25,7 +25,7 @@ public class StudentSemesterService {
                 .map(element -> new TableData(element.getId(), element.getSemester().toString(),
                         element.getSemesterPassDate() != null ?
                                 DateFormatter.getFormatter().format(element.getSemesterPassDate()) : null,
-                        element.getAverage().toString()))
+                        element.getAverage() != null ? element.getAverage().toString() : null))
                 .collect(Collectors.toList());
     }
 

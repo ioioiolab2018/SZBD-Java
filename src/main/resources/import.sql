@@ -1,21 +1,21 @@
 DROP TABLE PERSONS CASCADE CONSTRAINTS;
 CREATE TABLE PERSONS(
-    PESEL VARCHAR2(11 CHAR) CONSTRAINT pk_persons_id PRIMARY KEY, 
-	BIRTH_DATE DATE DEFAULT SYSDATE, 
-	BIRTHPLACE VARCHAR2(50 CHAR) NOT NULL, 
-	FATHER_NAME VARCHAR2(20 CHAR), 
-	MOTHER_NAME VARCHAR2(20 CHAR), 
-	NAME VARCHAR2(20 CHAR) NOT NULL, 
-	NAME2 VARCHAR2(20 CHAR), 
-	ROLE VARCHAR2(10 CHAR) DEFAULT 'STUDENT' CONSTRAINT chk_role CHECK(ROLE IN ('STUDENT','LECTURER')), 
-	SEX VARCHAR2(10 CHAR) CONSTRAINT chk_sex CHECK(SEX IN ('MALE','FEMALE')), 
+    PESEL VARCHAR2(11 CHAR) CONSTRAINT pk_persons_id PRIMARY KEY,
+	BIRTH_DATE DATE DEFAULT SYSDATE,
+	BIRTHPLACE VARCHAR2(50 CHAR) NOT NULL,
+	FATHER_NAME VARCHAR2(20 CHAR),
+	MOTHER_NAME VARCHAR2(20 CHAR),
+	NAME VARCHAR2(20 CHAR) NOT NULL,
+	NAME2 VARCHAR2(20 CHAR),
+	ROLE VARCHAR2(10 CHAR) DEFAULT 'STUDENT' CONSTRAINT chk_role CHECK(ROLE IN ('STUDENT','LECTURER')),
+	SEX VARCHAR2(10 CHAR) CONSTRAINT chk_sex CHECK(SEX IN ('MALE','FEMALE')),
 	SURNAME VARCHAR2(255 CHAR) NOT NULL);
 
 DROP TABLE APP_USERS CASCADE CONSTRAINTS;
 CREATE TABLE APP_USERS(
 	USERNAME VARCHAR2(50 CHAR) CONSTRAINT uk_username PRIMARY KEY,
-    PERSON_ID VARCHAR2(11 CHAR) CONSTRAINT fk_persons REFERENCES persons(pesel), 
-	LAST_LOGIN_DATE DATE, 
+    PERSON_ID VARCHAR2(11 CHAR) CONSTRAINT fk_persons REFERENCES persons(pesel),
+	LAST_LOGIN_DATE DATE,
 	PASSWORD VARCHAR2(100 CHAR) NOT NULL);
 
 DROP TABLE LECTURERS CASCADE CONSTRAINTS;
@@ -30,8 +30,8 @@ CREATE TABLE LECTURERS(
 DROP SEQUENCE LECTURERS_SEQ;
 CREATE SEQUENCE LECTURERS_SEQ START WITH 1000;
 
-CREATE OR REPLACE TRIGGER LECTURERS_BIR 
-BEFORE INSERT ON LECTURERS 
+CREATE OR REPLACE TRIGGER LECTURERS_BIR
+BEFORE INSERT ON LECTURERS
 FOR EACH ROW
 BEGIN
   SELECT LECTURERS_SEQ.NEXTVAL
@@ -55,8 +55,8 @@ CREATE TABLE STUDENTS(
 DROP SEQUENCE STUDENTS_SEQ;
 CREATE SEQUENCE STUDENTS_SEQ START WITH 1000;
 
-CREATE OR REPLACE TRIGGER STUDENTS_BIR 
-BEFORE INSERT ON STUDENTS 
+CREATE OR REPLACE TRIGGER STUDENTS_BIR
+BEFORE INSERT ON STUDENTS
 FOR EACH ROW
 BEGIN
   SELECT STUDENTS_SEQ.NEXTVAL
@@ -71,7 +71,7 @@ CREATE TABLE STUDENT_GROUPS(
 	START_DATE DATE DEFAULT SYSDATE,
 	END_DATE DATE DEFAULT SYSDATE + INTERVAL '3' YEAR,
 	FACULTY VARCHAR2(100 CHAR),
-	STUDY_FIELD VARCHAR2(100 CHAR), 
+	STUDY_FIELD VARCHAR2(100 CHAR),
 	STUDY_MODE VARCHAR2(20 CHAR) CONSTRAINT chk_study_mode CHECK(STUDY_MODE IN ('FULL_TIME','PART_TIME')),
 	TYPE VARCHAR2(20 CHAR) CONSTRAINT chk_type CHECK(TYPE IN ('FIRST_DEGREE','SECOND_DEGREE','PHD','POSTGRADUATE')),
 	SEMESTER NUMBER(2,0));
@@ -79,8 +79,8 @@ CREATE TABLE STUDENT_GROUPS(
 DROP SEQUENCE STUDENT_GROUPS_SEQ;
 CREATE SEQUENCE STUDENT_GROUPS_SEQ START WITH 1;
 
-CREATE OR REPLACE TRIGGER STUDENT_GROUPS_BIR 
-BEFORE INSERT ON STUDENT_GROUPS 
+CREATE OR REPLACE TRIGGER STUDENT_GROUPS_BIR
+BEFORE INSERT ON STUDENT_GROUPS
 FOR EACH ROW
 BEGIN
   SELECT STUDENT_GROUPS_SEQ.NEXTVAL
@@ -107,8 +107,8 @@ CREATE TABLE STUDY_SUBJECTS(
 DROP SEQUENCE STUDY_SUBJECTS_SEQ;
 CREATE SEQUENCE STUDY_SUBJECTS_SEQ START WITH 1;
 
-CREATE OR REPLACE TRIGGER STUDY_SUBJECTS_BIR 
-BEFORE INSERT ON STUDY_SUBJECTS 
+CREATE OR REPLACE TRIGGER STUDY_SUBJECTS_BIR
+BEFORE INSERT ON STUDY_SUBJECTS
 FOR EACH ROW
 BEGIN
   SELECT STUDY_SUBJECTS_SEQ.NEXTVAL
@@ -129,8 +129,8 @@ CREATE TABLE GRADES(
 DROP SEQUENCE GRADES_SEQ;
 CREATE SEQUENCE GRADES_SEQ START WITH 1;
 
-CREATE OR REPLACE TRIGGER GRADES_BIR 
-BEFORE INSERT ON GRADES 
+CREATE OR REPLACE TRIGGER GRADES_BIR
+BEFORE INSERT ON GRADES
 FOR EACH ROW
 BEGIN
   SELECT GRADES_SEQ.NEXTVAL
@@ -153,8 +153,8 @@ CREATE TABLE PROPOSALS(
 DROP SEQUENCE PROPOSALS_SEQ;
 CREATE SEQUENCE PROPOSALS_SEQ START WITH 1;
 
-CREATE OR REPLACE TRIGGER PROPOSALS_BIR 
-BEFORE INSERT ON PROPOSALS 
+CREATE OR REPLACE TRIGGER PROPOSALS_BIR
+BEFORE INSERT ON PROPOSALS
 FOR EACH ROW
 BEGIN
   SELECT PROPOSALS_SEQ.NEXTVAL
@@ -174,8 +174,8 @@ CREATE TABLE CONTACTS(
 DROP SEQUENCE CONTACTS_SEQ;
 CREATE SEQUENCE CONTACTS_SEQ START WITH 1;
 
-CREATE OR REPLACE TRIGGER CONTACTS_BIR 
-BEFORE INSERT ON CONTACTS 
+CREATE OR REPLACE TRIGGER CONTACTS_BIR
+BEFORE INSERT ON CONTACTS
 FOR EACH ROW
 BEGIN
   SELECT CONTACTS_SEQ.NEXTVAL
@@ -198,8 +198,8 @@ CREATE TABLE ADDRESSES(
 DROP SEQUENCE ADDRESSES_SEQ;
 CREATE SEQUENCE ADDRESSES_SEQ START WITH 1;
 
-CREATE OR REPLACE TRIGGER ADDRESSES_BIR 
-BEFORE INSERT ON ADDRESSES 
+CREATE OR REPLACE TRIGGER ADDRESSES_BIR
+BEFORE INSERT ON ADDRESSES
 FOR EACH ROW
 BEGIN
   SELECT ADDRESSES_SEQ.NEXTVAL
@@ -221,8 +221,8 @@ CREATE TABLE QUESTIONNAIRES(
 DROP SEQUENCE QUESTIONNAIRES_SEQ;
 CREATE SEQUENCE QUESTIONNAIRES_SEQ START WITH 1;
 
-CREATE OR REPLACE TRIGGER QUESTIONNAIRES_BIR 
-BEFORE INSERT ON QUESTIONNAIRES 
+CREATE OR REPLACE TRIGGER QUESTIONNAIRES_BIR
+BEFORE INSERT ON QUESTIONNAIRES
 FOR EACH ROW
 BEGIN
   SELECT QUESTIONNAIRES_SEQ.NEXTVAL
@@ -235,8 +235,8 @@ DROP TABLE QUESTIONNAIRE_ANSWERS CASCADE CONSTRAINTS;
 CREATE TABLE QUESTIONNAIRE_ANSWERS(
     QUESTIONNAIRE_ID NUMBER(6,0) CONSTRAINT fk_questionnaire_answers REFERENCES questionnaires(ID),
     PERSON_ID VARCHAR2(11 CHAR) CONSTRAINT fk_persons_answers REFERENCES persons(pesel),
-	ANSWER CLOB, 
-	DT DATE DEFAULT SYSDATE, 
+	ANSWER CLOB,
+	DT DATE DEFAULT SYSDATE,
     CONSTRAINT pk_questionnaire_to_student PRIMARY KEY(QUESTIONNAIRE_ID, PERSON_ID));
 
 DROP VIEW STUDENT_INFORMATION;
@@ -297,7 +297,7 @@ CREATE OR REPLACE FORCE VIEW STUDENT_INFORMATION(
             groups_to_students tgr,
             student_groups sgr
         WHERE
-            p.role = 'STUDENT' 
+            p.role = 'STUDENT'
             AND p.pesel = s.person_id(+)
             AND s.student_index = tgr.student_id(+)
             AND tgr.group_id = sgr.id(+);
@@ -337,8 +337,8 @@ CREATE OR REPLACE FORCE VIEW STUDENT_SUBJECTS(
             lec.academic_degree || ' ' || plec.name || ' ' || plec.surname,
             sub.ects_value,
             case
-                when exists (select g.value 
-                        from grades g 
+                when exists (select g.value
+                        from grades g
                         where g.subject_id = sub.id AND g.student_id(+) = st.student_index AND g.value >= 3)
                     then 'T'
                 else 'F'
@@ -393,7 +393,7 @@ COMMENT ON TABLE SEMESTERS IS 'COMPL="Widok zwracający semestry na które uczę
 
 CREATE OR REPLACE PACKAGE StudentAverageCalculations IS
     FUNCTION semesterAverage(p_student_index number, p_group_id number) RETURN number;
-    FUNCTION studyAverage(p_pesel varchar2) RETURN number;
+    FUNCTION isPassSemester(p_group_id number, p_student_index varchar2) RETURN number;
 END StudentAverageCalculations;
 
 CREATE OR REPLACE PACKAGE BODY StudentAverageCalculations IS
@@ -401,10 +401,10 @@ CREATE OR REPLACE PACKAGE BODY StudentAverageCalculations IS
         RETURN number
     IS
         cursor grade_cursor is
-            SELECT 
+            SELECT
                 sub.ects_value,
-                gde.value 
-            FROM 
+                gde.value
+            FROM
                 student_groups stgr,
                 groups_to_students grtost,
                 students st,
@@ -429,33 +429,67 @@ CREATE OR REPLACE PACKAGE BODY StudentAverageCalculations IS
             v_sum := v_sum + v_rec.ects_value * v_rec.value;
             v_ects_points_sum := v_ects_points_sum + v_rec.ects_value;
         END LOOP;
-        v_return := v_sum / v_ects_points_sum;
+        IF v_ects_points_sum > 0 THEN
+            v_return := v_sum / v_ects_points_sum;
+        END IF;
     RETURN v_return;
     END semesterAverage;
-    FUNCTION studyAverage(p_pesel varchar2)
+    FUNCTION isPassSemester(p_group_id number, p_student_index varchar2)
         RETURN number
     IS
+      cursor semester_cursor is
+        SELECT
+          sub.ects_value,
+          gde.value
+        FROM
+          student_groups stgr,
+          groups_to_students grtost,
+          students st,
+          study_subjects sub,
+          grades gde
+        WHERE
+          stgr.id = grtost.group_id
+          AND grtost.student_id = st.student_index
+          AND stgr.id = sub.group_id
+          AND gde.student_id = st.student_index
+          AND gde.subject_id = sub.id
+          AND st.student_index = p_student_index
+          AND stgr.id = p_group_id;
         v_return number;
+        v_sum number;
     BEGIN
-        v_return := 0;
+        v_sum := 0;
+        FOR v_rec in semester_cursor
+        LOOP
+          IF v_rec.VALUE > 2 THEN
+            v_sum := v_sum + v_rec.ects_value;
+          END IF;
+        END LOOP;
+        IF v_sum >= 30 THEN
+          v_return := 1;
+        ELSE
+          v_return := 0;
+        END IF;
     RETURN v_return;
-    END studyAverage;
+    END isPassSemester;
 END StudentAverageCalculations;
 
 DROP VIEW STUDENT_SEMESTERS;
 CREATE OR REPLACE FORCE VIEW STUDENT_SEMESTERS(
         id,
         semester,
-        semester_pass_date,
-        average,
-        username
+    semester_pass_date,
+    average,
+    username
     ) AS
         SELECT
             stgr.id,
             stgr.semester,
-            case 
-            when not exists (select t_gde.value from grades t_gde where t_gde.student_id=st.student_index and t_gde.value < 3 and t_gde.subject_id = sub.id)
-            then (select max(grade_date) from grades t_gde where t_gde.student_id = st.student_index and t_gde.subject_id = sub.id)
+            case
+            StudentAverageCalculations.isPassSemester(stgr.ID,st.STUDENT_INDEX)
+            when 1
+            then (select max(grade_date) from grades t_gde, study_subjects sub where t_gde.student_id = st.student_index
+                and stgr.id = sub.group_id and t_gde.subject_id = sub.id)
             else null
             end as semester_pass_date,
             StudentAverageCalculations.semesterAverage(st.student_index, stgr.id) as average,
@@ -465,17 +499,12 @@ CREATE OR REPLACE FORCE VIEW STUDENT_SEMESTERS(
             groups_to_students grtost,
             students st,
             persons p,
-            app_users u,
-            study_subjects sub, 
-            grades gde
+            app_users u
         WHERE
             stgr.id = grtost.group_id
             AND grtost.student_id = st.student_index
             AND st.person_id = p.pesel
-            AND p.pesel = u.person_id
-            AND stgr.id = sub.group_id
-            AND gde.student_id = st.student_index
-            AND gde.subject_id = sub.id;
+            AND p.pesel = u.person_id;
 COMMENT ON TABLE STUDENT_SEMESTERS IS 'COMPL="Widok zwracający informacje o semestrach na które uczęszczał student."';
 
 DROP VIEW STUDENT_GRADES;
