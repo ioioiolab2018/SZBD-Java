@@ -78,9 +78,12 @@ public class ProposalService {
         return proposalRepository.findOne(id);
     }
 
-    public void saveProposal(Proposal proposal) {
+    public void saveStudentProposal(Proposal proposal) {
         User user = userService.getUserByUsername(proposal.getPersonId());
         proposal.setPersonId(user.getPersonId());
+        proposalRepository.save(proposal);
+    }
+    public void saveProposal(Proposal proposal) {
         proposalRepository.save(proposal);
     }
 }

@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.Address;
 
 @Repository
-public interface AddresRepository extends CrudRepository<Address, Long> {
+public interface AddressRepository extends CrudRepository<Address, Long> {
 
 }

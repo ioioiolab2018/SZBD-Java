@@ -6,12 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.szbd.virtualuniversity.domain.commons.model.SemesterData;
 import pl.szbd.virtualuniversity.domain.commons.model.TableData;
-import pl.szbd.virtualuniversity.domain.commons.model.entities.Person;
-import pl.szbd.virtualuniversity.domain.commons.model.entities.Proposal;
-import pl.szbd.virtualuniversity.domain.commons.model.entities.StudySubject;
-import pl.szbd.virtualuniversity.domain.commons.service.PersonService;
-import pl.szbd.virtualuniversity.domain.commons.service.ProposalService;
-import pl.szbd.virtualuniversity.domain.commons.service.StudentSubjectsService;
+import pl.szbd.virtualuniversity.domain.commons.model.entities.*;
+import pl.szbd.virtualuniversity.domain.commons.repository.AddressRepository;
+import pl.szbd.virtualuniversity.domain.commons.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +24,10 @@ public class Commons {
     private ProposalService proposalService;
     @Autowired
     private StudentSubjectsService studentSubjectsService;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private AddressService addressService;
 
     @RequestMapping(value = "/person/{pesel}", method = RequestMethod.GET)
     private Person getPerson(@PathVariable String pesel) {
@@ -48,10 +49,33 @@ public class Commons {
         return proposalService.getProposals(surname, answer);
     }
 
-    @PostMapping(value = "/proposal/", consumes = "application/json")
-    public void savePersonInformation(@RequestBody Proposal proposal) {
+    //zapis wniosku z widoku studenta
+       @PostMapping(value = "/proposal/", consumes = "application/json")
+    public void saveStudentProposal(@RequestBody Proposal proposal) {
+        proposalService.saveStudentProposal(proposal);
+    }
+
+    // Zapis normalnego wniosku
+    @PostMapping(value = "/saveProposal/", consumes = "application/json")
+    public void saveProposal(@RequestBody Proposal proposal) {
         proposalService.saveProposal(proposal);
     }
+
+    @PostMapping(value = "/person/", consumes = "application/json")
+    public void savePerson(@RequestBody Person person) {
+        personService.savePerson(person);
+    }
+
+    @PostMapping(value = "/student/", consumes = "application/json")
+    public void saveStudent(@RequestBody Student student) {
+        studentService.saveStudent(student);
+    }
+
+    @PostMapping(value = "/address/", consumes = "application/json")
+    public void saveAddress(@RequestBody Address address) {
+        addressService.saveAddres(address);
+    }
+
 
     @GetMapping("/student-subjects/{username}")
     public ArrayList<SemesterData> getStudentSubjects(@PathVariable String username, @RequestParam(value = "filter", required = false) String filter) {
