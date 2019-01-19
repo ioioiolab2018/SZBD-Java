@@ -45,7 +45,6 @@ public class Commons {
 
     @GetMapping("/proposals/")
     public List<TableData> getProposals(@RequestParam String surname, @RequestParam String answer ) {
-        System.out.println(surname +"  "+ answer);
         return proposalService.getProposals(surname, answer);
     }
 
