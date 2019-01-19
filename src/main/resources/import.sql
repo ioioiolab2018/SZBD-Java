@@ -543,3 +543,6 @@ CREATE OR REPLACE FORCE VIEW STUDENT_GRADES(
             AND s.person_id = p.pesel
             AND p.pesel = u.person_id;
 COMMENT ON TABLE STUDENT_GRADES IS 'COMPL="Widok zwracający oceny studenta."';
+
+CREATE BITMAP INDEX SEX_INDEX ON PERSONS(SEX);
+
