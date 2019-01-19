@@ -35,12 +35,18 @@ public class Commons {
 
     @GetMapping("/proposals/{username}")
     public List<TableData> getStudentProposals(@PathVariable String username) {
-        return proposalService.getStudentProposals(username);
+        return proposalService.getProposals(username);
     }
 
     @GetMapping("/proposal/{id}")
     public Proposal getProposal(@PathVariable Long id) {
         return proposalService.getProposalById(id);
+    }
+
+    @GetMapping("/proposals/")
+    public List<TableData> getProposals(@RequestParam String surname, @RequestParam String answer ) {
+        System.out.println(surname +"  "+ answer);
+        return proposalService.getProposals(surname, answer);
     }
 
     @PostMapping(value = "/proposal/", consumes = "application/json")

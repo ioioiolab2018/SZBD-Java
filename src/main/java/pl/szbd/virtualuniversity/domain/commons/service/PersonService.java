@@ -17,6 +17,10 @@ public class PersonService {
         return personRepository.findOne(pesel);
     }
 
+    public Person getPersonByNameAndSurnamr(String name, String surname){
+        return personRepository.findPersonByNameEqualsAndSurnameEquals(name,surname);
+    }
+
     public Person getPersonByUsername(String username) {
         User user = userService.getUserByUsername(username);
         if (user != null) {
