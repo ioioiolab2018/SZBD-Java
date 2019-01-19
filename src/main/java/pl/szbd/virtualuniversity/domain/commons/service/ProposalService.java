@@ -3,14 +3,13 @@ package pl.szbd.virtualuniversity.domain.commons.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.szbd.virtualuniversity.domain.commons.model.TableData;
-import pl.szbd.virtualuniversity.domain.commons.model.entities.Person;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.Proposal;
+import pl.szbd.virtualuniversity.domain.commons.model.entities.Student;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.User;
 import pl.szbd.virtualuniversity.domain.commons.repository.ProposalRepository;
 import pl.szbd.virtualuniversity.domain.commons.utils.DateFormatter;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,7 +17,7 @@ public class ProposalService {
     @Autowired
     private ProposalRepository proposalRepository;
     @Autowired
-    private PersonService personService;
+    private StudentService studentService;
     @Autowired
     private UserService userService;
 
@@ -34,18 +33,18 @@ public class ProposalService {
                 .collect(Collectors.toList());
     }
 
-    public List<TableData> getProposals(String nameAndSurname, String answer) {
-        Person person;
+    public List<TableData> getProposals(Long index, String answer) {
+        Student student;
         try {
-            person = personService.getPersonByNameAndSurnamr(nameAndSurname.split(" ")[0], nameAndSurname.split(" ")[1]);
+            student = studentService.getStudentByIndex(index);
         } catch (Exception e) {
-            person = null;
+            student = null;
         }
 
-        if (person != null) {
+        if (student != null) {
             List<TableData> result;
             if (answer.equals("false")) {
-                result = proposalRepository.getProposalsByPersonId(person.getPesel())
+                result = proposalRepository.getProposalsByPersonId(student.getPersonId())
                         .stream().filter(proposal -> proposal.getAnswerDate() == null).map(element -> new TableData(
                                 element.getId(),
                                 element.getTopic(),
@@ -56,7 +55,7 @@ public class ProposalService {
                 return result.subList(0, Math.min(9, result.size() - 1));
             }
             if (answer.equals("true")) {
-                result = proposalRepository.getProposalsByPersonId(person.getPesel())
+                result = proposalRepository.getProposalsByPersonId(student.getPersonId())
                         .stream().filter(proposal -> proposal.getAnswerDate() != null).map(element -> new TableData(
                                 element.getId(),
                                 element.getTopic(),

@@ -12,4 +12,5 @@ public interface PersonRepository extends JpaRepository<Person, String> {
     @Query(value = "SELECT * FROM PERSONS u WHERE u.NAME = ? AND u.SURNAME=?", nativeQuery = true)
     Person findPersonByNameEqualsAndSurnameEquals(String name, String surname);
 
+
 }
