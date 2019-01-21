@@ -14,4 +14,8 @@ public interface ProposalRepository extends JpaRepository<Proposal, Long> {
     @Query(value = "SELECT * FROM PROPOSALS p WHERE p.PERSON_ID = ? ORDER BY p.SUBMISSION_DATE DESC, p.TOPIC ASC", nativeQuery = true)
     List<Proposal> getProposalsByPersonId(String personId);
 
+
+
+    @Query
+    Proposal getFirstById(Long id);
 }

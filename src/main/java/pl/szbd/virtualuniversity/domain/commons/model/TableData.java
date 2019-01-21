@@ -61,4 +61,15 @@ public class TableData {
     public void setColumn4(String column4) {
         this.column4 = column4;
     }
+
+    @Override
+    public String toString() {
+        return "TableData{" +
+                "id=" + id +
+                ", column1='" + column1 + '\'' +
+                ", column2='" + column2 + '\'' +
+                ", column3='" + column3 + '\'' +
+                ", column4='" + column4 + '\'' +
+                '}';
+    }
 }

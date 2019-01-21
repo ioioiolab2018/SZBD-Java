@@ -18,4 +18,21 @@ public class QuestionnaireAnswerService {
     public void saveQuestionnaireAnswer(QuestionnaireAnswer questionnaireAnswer) {
         questionnaireAnswerRepository.save(questionnaireAnswer);
     }
+
+    public Long countAnswersForQuestionnairyWithId(Long id) {
+        Long count =questionnaireAnswerRepository.countAnswers(id);
+        if(count != null){
+            return count;
+        }else return 0L;
+    }
+
+    public Long countAnswers(Long id, String option) {
+        Long count =questionnaireAnswerRepository.countAnswersForOption(id,option);
+        if(count != null){
+            return count;
+        }else return 0L;
+    }
+
+
+
 }

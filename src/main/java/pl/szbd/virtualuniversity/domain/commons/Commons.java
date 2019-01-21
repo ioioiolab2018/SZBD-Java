@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.szbd.virtualuniversity.domain.commons.model.SemesterData;
 import pl.szbd.virtualuniversity.domain.commons.model.TableData;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.*;
-import pl.szbd.virtualuniversity.domain.commons.repository.AddressRepository;
 import pl.szbd.virtualuniversity.domain.commons.service.*;
 
 import java.util.ArrayList;
@@ -28,6 +27,8 @@ public class Commons {
     private StudentService studentService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private QuestionnaireMainService questionnaireMainService;
 
     @RequestMapping(value = "/person/{pesel}", method = RequestMethod.GET)
     private Person getPerson(@PathVariable String pesel) {
@@ -47,6 +48,12 @@ public class Commons {
     @GetMapping("/proposals/")
     public List<TableData> getProposals(@RequestParam Long surname, @RequestParam String answer ) {
         return proposalService.getProposals(surname, answer);
+    }
+
+    @GetMapping("/questionnaires/")
+    public List<TableData> getProposals(@RequestParam String name ) {
+        System.out.println(questionnaireMainService.getQuestionnairesLike(name));
+        return questionnaireMainService.getQuestionnairesLike(name);
     }
 
     //zapis wniosku z widoku studenta

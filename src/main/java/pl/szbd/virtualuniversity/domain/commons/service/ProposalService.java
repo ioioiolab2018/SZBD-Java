@@ -3,11 +3,10 @@ package pl.szbd.virtualuniversity.domain.commons.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.szbd.virtualuniversity.domain.commons.model.TableData;
-import pl.szbd.virtualuniversity.domain.commons.model.entities.Person;
-import pl.szbd.virtualuniversity.domain.commons.model.entities.Proposal;
-import pl.szbd.virtualuniversity.domain.commons.model.entities.Student;
-import pl.szbd.virtualuniversity.domain.commons.model.entities.User;
+import pl.szbd.virtualuniversity.domain.commons.model.entities.*;
 import pl.szbd.virtualuniversity.domain.commons.repository.ProposalRepository;
+import pl.szbd.virtualuniversity.domain.commons.repository.QuestionnaireAnswerRepository;
+import pl.szbd.virtualuniversity.domain.commons.repository.QuestionnaireRepository;
 import pl.szbd.virtualuniversity.domain.commons.utils.DateFormatter;
 
 import java.util.List;
@@ -24,6 +23,7 @@ public class ProposalService {
     @Autowired
     private PersonService personService;
 
+
     public List<TableData> getProposals(String username) {
         User user = userService.getUserByUsername(username);
         return proposalRepository.getProposalsByPersonId(user.getPersonId())
@@ -36,7 +36,7 @@ public class ProposalService {
                 .collect(Collectors.toList());
     }
 
-    public List<TableData> getProposals(Long index, String answer) {
+    public List<TableData> getProposals(Long index, String filter) {
         Student student;
         try {
             student = studentService.getStudentByIndex(index);
@@ -47,7 +47,7 @@ public class ProposalService {
         if (student != null) {
             List<TableData> result;
             String user = personService.getPerson(student.getPersonId()).getName() + " " + personService.getPerson(student.getPersonId()).getSurname() +" "+ index;
-            if (answer.equals("false")) {
+            if (filter.equals("false")) {
                 result = proposalRepository.getProposalsByPersonId(student.getPersonId())
                         .stream().filter(proposal -> proposal.getAnswerDate() == null).map(element -> new TableData(
                                 element.getId(),
@@ -56,9 +56,10 @@ public class ProposalService {
                                 DateFormatter.getFormatter().format(element.getSubmissionDate()),
                                 element.getShortAnswer() != null ? element.getShortAnswer() : ""))
                         .collect(Collectors.toList());
+                System.out.println(result);
                 return result.subList(0, Math.min(9, result.size() - 1));
             }
-            if (answer.equals("true")) {
+            if (filter.equals("true")) {
                 result = proposalRepository.getProposalsByPersonId(student.getPersonId())
                         .stream().filter(proposal -> proposal.getAnswerDate() != null).map(element -> new TableData(
                                 element.getId(),
@@ -67,6 +68,7 @@ public class ProposalService {
                                 DateFormatter.getFormatter().format(element.getSubmissionDate()),
                                 element.getShortAnswer() != null ? element.getShortAnswer() : ""))
                         .collect(Collectors.toList());
+                System.out.println(result);
                 return result.subList(0, Math.min(9, result.size() - 1));
 
             }
@@ -75,12 +77,12 @@ public class ProposalService {
     }
 
     public Proposal getProposalById(Long id) {
-        return proposalRepository.findOne(id);
+        return proposalRepository.getFirstById(id);
     }
 
     public void saveStudentProposal(Proposal proposal) {
-        User user = userService.getUserByUsername(proposal.getPersonId());
-        proposal.setPersonId(user.getPersonId());
+//        User user = userService.getUserByUsername(proposal.getPersonId());
+//        proposal.setPersonId(user.getPersonId());
         proposalRepository.save(proposal);
     }
     public void saveProposal(Proposal proposal) {
