@@ -18,7 +18,6 @@ public class ContactService {
         contactRepository.save(contact);
     }
     public void  saveContact(List<Contact> contacts){
-        System.out.println(contacts);
         contactRepository.save(contacts);
     }
 }

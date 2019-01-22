@@ -103,7 +103,6 @@ public class Commons {
         contactService.saveContact(contacts);
     }
 
-
     @PostMapping(value = "/grade/", consumes = "application/json")
     public void saveGrade(@RequestBody Grade grade) {
         gradeService.saveGrade(grade);
