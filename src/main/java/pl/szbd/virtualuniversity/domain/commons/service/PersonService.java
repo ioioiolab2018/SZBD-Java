@@ -3,6 +3,7 @@ package pl.szbd.virtualuniversity.domain.commons.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.Person;
+import pl.szbd.virtualuniversity.domain.commons.model.entities.Student;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.User;
 import pl.szbd.virtualuniversity.domain.commons.model.enums.RoleType;
 import pl.szbd.virtualuniversity.domain.commons.repository.PersonRepository;
@@ -18,9 +19,17 @@ public class PersonService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private StudentService studentService;
+
 
     public Person getPerson(String pesel) {
         return personRepository.findOne(pesel);
+    }
+
+    public Person getPerson(Long index) {
+        Student student = studentService.getStudentByIndex(index);
+        return personRepository.findOne(student.getPersonId());
     }
 
     public Person getPersonByNameAndSurnamr(String name, String surname){

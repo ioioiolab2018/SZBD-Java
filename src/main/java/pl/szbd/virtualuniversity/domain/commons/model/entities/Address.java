@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Address {
 
     private Long id;
-    private Person person;
+    private String personId;
     private String town;
     private String street;
     private String zipCode;
@@ -28,14 +28,13 @@ public class Address {
         this.id = id;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
-    public Person getPerson() {
-        return person;
+    @Column(name = "PERSON_ID")
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(String person) {
+        this.personId = person;
     }
 
     @Basic
@@ -102,7 +101,7 @@ public class Address {
     public String toString() {
         return "Address{" +
                 "id=" + id +
-                ", person=" + person +
+                ", person=" + personId +
                 ", town='" + town + '\'' +
                 ", street='" + street + '\'' +
                 ", zipCode='" + zipCode + '\'' +

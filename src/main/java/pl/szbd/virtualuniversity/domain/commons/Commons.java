@@ -45,6 +45,11 @@ public class Commons {
         return personService.getPerson(pesel);
     }
 
+    @RequestMapping(value = "/person-by-index/{pesel}", method = RequestMethod.GET)
+    private Person getPerson(@PathVariable Long pesel) {
+        return personService.getPerson(pesel);
+    }
+
     @GetMapping("/proposals/{username}")
     public List<TableData> getStudentProposals(@PathVariable String username) {
         return proposalService.getProposals(username);
@@ -56,18 +61,18 @@ public class Commons {
     }
 
     @GetMapping("/proposals/")
-    public List<TableData> getProposals(@RequestParam String index, @RequestParam String answer ) {
+    public List<TableData> getProposals(@RequestParam String index, @RequestParam String answer) {
         return proposalService.getProposals(index, answer);
     }
 
     @GetMapping("/questionnaires/")
-    public List<TableData> getProposals(@RequestParam String name ) {
+    public List<TableData> getProposals(@RequestParam String name) {
         System.out.println(questionnaireMainService.getQuestionnairesLike(name));
         return questionnaireMainService.getQuestionnairesLike(name);
     }
 
     //zapis wniosku z widoku studenta
-       @PostMapping(value = "/proposal/", consumes = "application/json")
+    @PostMapping(value = "/proposal/", consumes = "application/json")
     public void saveStudentProposal(@RequestBody Proposal proposal) {
         proposalService.saveStudentProposal(proposal);
     }
@@ -98,9 +103,19 @@ public class Commons {
         addressService.saveAddres(address);
     }
 
+    @GetMapping(value = "/get-address/{personId}", produces = "application/json")
+    public List<Address> getAddress(@PathVariable String personId) {
+        return addressService.getAddres(personId);
+    }
+
     @PostMapping(value = "/contact/", consumes = "application/json")
     public void saveContacts(@RequestBody List<Contact> contacts) {
         contactService.saveContact(contacts);
+    }
+
+    @GetMapping(value = "/contact/{personId}", produces = "application/json")
+    public List<Contact> getContact(@PathVariable String personId) {
+        return contactService.getContact(personId);
     }
 
     @PostMapping(value = "/grade/", consumes = "application/json")

@@ -14,10 +14,15 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
-    public void  saveContact(Contact contact){
+    public void saveContact(Contact contact) {
         contactRepository.save(contact);
     }
-    public void  saveContact(List<Contact> contacts){
+
+    public void saveContact(List<Contact> contacts) {
         contactRepository.save(contacts);
+    }
+
+    public List<Contact> getContact(String personId) {
+        return contactRepository.findAllByPersonId(personId);
     }
 }

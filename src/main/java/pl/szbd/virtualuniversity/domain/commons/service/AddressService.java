@@ -12,10 +12,15 @@ public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
-    public void  saveAddres(Address address){
+    public void saveAddres(Address address) {
         addressRepository.save(address);
     }
-    public void  saveAddres(List<Address> address){
+
+    public void saveAddres(List<Address> address) {
         addressRepository.save(address);
+    }
+
+    public List<Address> getAddres(String personId) {
+        return addressRepository.findAllByPersonId(personId);
     }
 }
