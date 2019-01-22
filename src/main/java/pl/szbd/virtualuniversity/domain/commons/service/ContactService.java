@@ -7,6 +7,8 @@ import pl.szbd.virtualuniversity.domain.commons.model.entities.Contact;
 import pl.szbd.virtualuniversity.domain.commons.repository.AddressRepository;
 import pl.szbd.virtualuniversity.domain.commons.repository.ContactRepository;
 
+import java.util.List;
+
 @Service
 public class ContactService {
     @Autowired
@@ -14,5 +16,9 @@ public class ContactService {
 
     public void  saveContact(Contact contact){
         contactRepository.save(contact);
+    }
+    public void  saveContact(List<Contact> contacts){
+        System.out.println(contacts);
+        contactRepository.save(contacts);
     }
 }

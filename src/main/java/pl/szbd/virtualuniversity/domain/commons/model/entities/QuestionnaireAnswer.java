@@ -8,7 +8,6 @@ import java.util.Date;
 public class QuestionnaireAnswer implements Serializable {
     @EmbeddedId
     private QuestionnaireAnswerIdentity questionnaireAnswerIdentity;
-    @Lob
     @Column(name = "ANSWER")
     private String answer;
     @Column(name = "DT")

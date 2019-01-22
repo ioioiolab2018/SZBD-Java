@@ -4,10 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.szbd.virtualuniversity.domain.commons.model.Item;
 import pl.szbd.virtualuniversity.domain.commons.model.SemesterData;
 import pl.szbd.virtualuniversity.domain.commons.model.TableData;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.*;
 import pl.szbd.virtualuniversity.domain.commons.service.*;
+import pl.szbd.virtualuniversity.domain.student.model.Semester;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,14 @@ public class Commons {
     private AddressService addressService;
     @Autowired
     private QuestionnaireMainService questionnaireMainService;
+    @Autowired
+    private StudySubjectService studySubjectService;
+    @Autowired
+    private GradeService gradeService;
+    @Autowired
+    private GroupService groupService;
+    @Autowired
+    private ContactService contactService;
 
     @RequestMapping(value = "/person/{pesel}", method = RequestMethod.GET)
     private Person getPerson(@PathVariable String pesel) {
@@ -46,8 +56,8 @@ public class Commons {
     }
 
     @GetMapping("/proposals/")
-    public List<TableData> getProposals(@RequestParam Long surname, @RequestParam String answer ) {
-        return proposalService.getProposals(surname, answer);
+    public List<TableData> getProposals(@RequestParam String index, @RequestParam String answer ) {
+        return proposalService.getProposals(index, answer);
     }
 
     @GetMapping("/questionnaires/")
@@ -73,20 +83,45 @@ public class Commons {
         personService.savePerson(person);
     }
 
+    @PostMapping(value = "/new-person/", consumes = "application/json")
+    public User saveNewPerson(@RequestBody Person person) {
+        return personService.saveNewPerson(person);
+    }
+
     @PostMapping(value = "/student/", consumes = "application/json")
     public void saveStudent(@RequestBody Student student) {
         studentService.saveStudent(student);
     }
 
     @PostMapping(value = "/address/", consumes = "application/json")
-    public void saveAddress(@RequestBody Address address) {
+    public void saveAddress(@RequestBody List<Address> address) {
         addressService.saveAddres(address);
     }
 
+    @PostMapping(value = "/contact/", consumes = "application/json")
+    public void saveContacts(@RequestBody List<Contact> contacts) {
+        contactService.saveContact(contacts);
+    }
+
+
+    @PostMapping(value = "/grade/", consumes = "application/json")
+    public void saveGrade(@RequestBody Grade grade) {
+        gradeService.saveGrade(grade);
+    }
+
+    @PostMapping(value = "/semester/", consumes = "application/json")
+    public void saveGrade(@RequestBody StudentGroup semester) {
+        groupService.saveStudentGroup(semester);
+    }
 
     @GetMapping("/student-subjects/{username}")
     public ArrayList<SemesterData> getStudentSubjects(@PathVariable String username, @RequestParam(value = "filter", required = false) String filter) {
         return studentSubjectsService.getStudentSubjects(username, filter);
+    }
+
+    @GetMapping("/subjects/{groupId}")
+    public List<Item> getSubjectsForSemester(@PathVariable Long groupId) {
+        return studySubjectService.findSubjectsForSemester(groupId);
     }
 
     @GetMapping("/subject/{id}")
