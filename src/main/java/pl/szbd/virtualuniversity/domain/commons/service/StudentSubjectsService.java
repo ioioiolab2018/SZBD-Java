@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.szbd.virtualuniversity.domain.commons.model.SemesterData;
 import pl.szbd.virtualuniversity.domain.commons.model.TableData;
+import pl.szbd.virtualuniversity.domain.commons.model.entities.Student;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.StudentSubject;
 import pl.szbd.virtualuniversity.domain.commons.model.entities.StudySubject;
+import pl.szbd.virtualuniversity.domain.commons.model.entities.User;
+import pl.szbd.virtualuniversity.domain.commons.repository.StudentRepository;
 import pl.szbd.virtualuniversity.domain.commons.repository.StudentSubjectRepository;
 import pl.szbd.virtualuniversity.domain.commons.repository.StudySubjectRepository;
+import pl.szbd.virtualuniversity.domain.commons.repository.UserRepository;
 import pl.szbd.virtualuniversity.domain.student.model.Semester;
 import pl.szbd.virtualuniversity.domain.student.repository.SemesterRepository;
 
@@ -54,6 +58,9 @@ public class StudentSubjectsService {
         }
         return new ArrayList<>();
     }
+
+
+
 
     public StudySubject getSubject(Long id) {
         return studySubjectRepository.findOne(id);

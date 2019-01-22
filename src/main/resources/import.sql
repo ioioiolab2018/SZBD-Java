@@ -73,7 +73,7 @@ CREATE TABLE STUDENT_GROUPS(
 	FACULTY VARCHAR2(100 CHAR),
 	STUDY_FIELD VARCHAR2(100 CHAR),
 	STUDY_MODE VARCHAR2(20 CHAR) CONSTRAINT chk_study_mode CHECK(STUDY_MODE IN ('FULL_TIME','PART_TIME')),
-	TYPE VARCHAR2(20 CHAR) CONSTRAINT chk_type CHECK(TYPE IN ('FIRST_DEGREE','SECOND_DEGREE','PHD','POSTGRADUATE')),
+	TYPE VARCHAR2(20 CHAR) ,
 	SEMESTER NUMBER(2,0));
 
 DROP SEQUENCE STUDENT_GROUPS_SEQ;
@@ -94,6 +94,9 @@ CREATE TABLE GROUPS_TO_STUDENTS(
     GROUP_ID NUMBER(6,0) CONSTRAINT fk_student_groups REFERENCES student_groups(ID),
     STUDENT_ID NUMBER(6,0) CONSTRAINT fk_students REFERENCES students(STUDENT_INDEX),
     CONSTRAINT pk_student_to_group PRIMARY KEY(GROUP_ID, STUDENT_ID));
+
+
+
 
 DROP TABLE STUDY_SUBJECTS CASCADE CONSTRAINTS;
 CREATE TABLE STUDY_SUBJECTS(
@@ -167,8 +170,8 @@ DROP TABLE CONTACTS CASCADE CONSTRAINTS;
 CREATE TABLE CONTACTS(
     ID NUMBER(19,0) CONSTRAINT pk_contacts_id PRIMARY KEY,
 	PERSON_ID VARCHAR2(11 CHAR) CONSTRAINT fk_persons_contacts REFERENCES persons(pesel),
-	CONTACT_TYPE VARCHAR2(10 CHAR) CONSTRAINT chk_contact_type CHECK(CONTACT_TYPE IN ('EMAIL','PHONE')),
-	TYPE VARCHAR2(20 CHAR) CONSTRAINT chk_type_contacts CHECK(TYPE IN ('BUSINESS','PRIVATE')),
+	CONTACT_TYPE VARCHAR2(10 CHAR) ,
+	TYPE VARCHAR2(20 CHAR) ,
 	VALUE VARCHAR2(50 CHAR));
 
 DROP SEQUENCE CONTACTS_SEQ;
@@ -235,7 +238,7 @@ DROP TABLE QUESTIONNAIRE_ANSWERS CASCADE CONSTRAINTS;
 CREATE TABLE QUESTIONNAIRE_ANSWERS(
     QUESTIONNAIRE_ID NUMBER(6,0) CONSTRAINT fk_questionnaire_answers REFERENCES questionnaires(ID),
     PERSON_ID VARCHAR2(11 CHAR) CONSTRAINT fk_persons_answers REFERENCES persons(pesel),
-	ANSWER CLOB,
+	ANSWER VARCHAR2(100 CHAR) ,
 	DT DATE DEFAULT SYSDATE,
     CONSTRAINT pk_questionnaire_to_student PRIMARY KEY(QUESTIONNAIRE_ID, PERSON_ID));
 
@@ -392,86 +395,104 @@ CREATE OR REPLACE FORCE VIEW SEMESTERS(
 COMMENT ON TABLE SEMESTERS IS 'COMPL="Widok zwracający semestry na które uczęszczał student."';
 
 CREATE OR REPLACE PACKAGE StudentAverageCalculations IS
-    FUNCTION semesterAverage(p_student_index number, p_group_id number) RETURN number;
-    FUNCTION isPassSemester(p_group_id number, p_student_index varchar2) RETURN number;
+  FUNCTION semesterAverage(p_student_index number, p_group_id number) RETURN number;
+  FUNCTION isPassSemester(p_group_id number, p_student_index varchar2) RETURN number;
+  PROCEDURE updateSemester(student_index number);
 END StudentAverageCalculations;
 
 CREATE OR REPLACE PACKAGE BODY StudentAverageCalculations IS
-    FUNCTION semesterAverage(p_student_index number, p_group_id number)
-        RETURN number
-    IS
-        cursor grade_cursor is
-            SELECT
-                sub.ects_value,
-                gde.value
-            FROM
-                student_groups stgr,
-                groups_to_students grtost,
-                students st,
-                study_subjects sub,
-                grades gde
-            WHERE
-                stgr.id = grtost.group_id
-                AND grtost.student_id = st.student_index
-                AND stgr.id = sub.group_id
-                AND gde.student_id = st.student_index
-                AND gde.subject_id = sub.id
-                AND st.student_index = p_student_index
-                AND stgr.id = p_group_id;
-        v_return number;
-        v_sum number;
-        v_ects_points_sum number;
+  FUNCTION semesterAverage(p_student_index number, p_group_id number)
+    RETURN number
+  IS
+    cursor grade_cursor is
+      SELECT
+        sub.ects_value,
+        gde.value
+      FROM
+        student_groups stgr,
+        groups_to_students grtost,
+        students st,
+        study_subjects sub,
+        grades gde
+      WHERE
+        stgr.id = grtost.group_id
+        AND grtost.student_id = st.student_index
+        AND stgr.id = sub.group_id
+        AND gde.student_id = st.student_index
+        AND gde.subject_id = sub.id
+        AND st.student_index = p_student_index
+        AND stgr.id = p_group_id;
+    v_return number;
+    v_sum number;
+    v_ects_points_sum number;
     BEGIN
-        v_sum := 0;
-        v_ects_points_sum := 0;
-        FOR v_rec in grade_cursor
-        LOOP
-            v_sum := v_sum + v_rec.ects_value * v_rec.value;
-            v_ects_points_sum := v_ects_points_sum + v_rec.ects_value;
-        END LOOP;
-        IF v_ects_points_sum > 0 THEN
-            v_return := v_sum / v_ects_points_sum;
-        END IF;
-    RETURN v_return;
+      v_sum := 0;
+      v_ects_points_sum := 0;
+      FOR v_rec in grade_cursor
+      LOOP
+        v_sum := v_sum + v_rec.ects_value * v_rec.value;
+        v_ects_points_sum := v_ects_points_sum + v_rec.ects_value;
+      END LOOP;
+      IF v_ects_points_sum > 0 THEN
+        v_return := v_sum / v_ects_points_sum;
+      END IF;
+      RETURN v_return;
     END semesterAverage;
-    FUNCTION isPassSemester(p_group_id number, p_student_index varchar2)
-        RETURN number
-    IS
-      cursor semester_cursor is
-        SELECT
-          sub.ects_value,
-          gde.value
-        FROM
-          student_groups stgr,
-          groups_to_students grtost,
-          students st,
-          study_subjects sub,
-          grades gde
-        WHERE
-          stgr.id = grtost.group_id
-          AND grtost.student_id = st.student_index
-          AND stgr.id = sub.group_id
-          AND gde.student_id = st.student_index
-          AND gde.subject_id = sub.id
-          AND st.student_index = p_student_index
-          AND stgr.id = p_group_id;
-        v_return number;
-        v_sum number;
+
+  FUNCTION isPassSemester(p_group_id number, p_student_index varchar2)
+    RETURN number
+  IS
+    cursor semester_cursor is
+      SELECT
+        sub.ects_value,
+        gde.value
+      FROM
+        student_groups stgr,
+        groups_to_students grtost,
+        students st,
+        study_subjects sub,
+        grades gde
+      WHERE
+        stgr.id = grtost.group_id
+        AND grtost.student_id = st.student_index
+        AND stgr.id = sub.group_id
+        AND gde.student_id = st.student_index
+        AND gde.subject_id = sub.id
+        AND st.student_index = p_student_index
+        AND stgr.id = p_group_id;
+    v_return number;
+    v_sum number;
     BEGIN
-        v_sum := 0;
-        FOR v_rec in semester_cursor
-        LOOP
-          IF v_rec.VALUE > 2 THEN
-            v_sum := v_sum + v_rec.ects_value;
-          END IF;
-        END LOOP;
-        IF v_sum >= 30 THEN
-          v_return := 1;
-        ELSE
-          v_return := 0;
+      v_sum := 0;
+      FOR v_rec in semester_cursor
+      LOOP
+        IF v_rec.VALUE > 2 THEN
+          v_sum := v_sum + v_rec.ects_value;
         END IF;
-    RETURN v_return;
+      END LOOP;
+      IF v_sum >= 30 THEN
+        v_return := 1;
+      ELSE
+        v_return := 0;
+      END IF;
+      RETURN v_return;
     END isPassSemester;
+
+  PROCEDURE updateSemester(student_index number) IS
+    CURSOR  semester_cursor is
+      SELECT
+        MAX(sg.SEMESTER) as max
+      FROM
+        GROUPS_TO_STUDENTS gts, STUDENT_GROUPS sg
+      WHERE
+        gts.STUDENT_ID=student_index;
+    BEGIN
+      FOR v_rec in semester_cursor
+      LOOP
+        UPDATE STUDENTS SET SEMESTER=v_rec.MAX WHERE STUDENT_INDEX=student_index;
+      END LOOP;
+    END;
+
 END StudentAverageCalculations;
 
 DROP VIEW STUDENT_SEMESTERS;
@@ -543,3 +564,8 @@ CREATE OR REPLACE FORCE VIEW STUDENT_GRADES(
             AND s.person_id = p.pesel
             AND p.pesel = u.person_id;
 COMMENT ON TABLE STUDENT_GRADES IS 'COMPL="Widok zwracający oceny studenta."';
+
+CREATE INDEX USER_INDEX ON APP_USERS(USERNAME);
+
+
+

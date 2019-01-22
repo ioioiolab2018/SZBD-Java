@@ -7,6 +7,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "STUDENTS")
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(name = "Update_semester",
+                procedureName = "STUDENTAVERAGECALCULATIONS.UPDATESEMESTER",
+                parameters = {
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "student_index", type = Long.class)
+                })
+})
 public class Student {
     private long index;
     private String personId;

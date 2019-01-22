@@ -49,6 +49,16 @@ public class User {
         this.lastLogin = date;
     }
 
+    public User(String personId, String username, String password, Date lastLogin) {
+        this.personId = personId;
+        this.username = username;
+        this.password = password;
+        this.lastLogin = lastLogin;
+    }
+
+    public User() {
+    }
+
     @Override
     public String toString() {
         return "User{" +

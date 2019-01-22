@@ -11,12 +11,13 @@ public class Grade {
     private Date date;
     private Float value;
     private GradeTypeEnum type;
-    private StudySubject subject;
-    private Student student;
+    private Long studySubjectId;
+    private Long studentIndex;
 
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "gradeSeq", sequenceName = "GRADES_SEQ")
+    @GeneratedValue(generator = "gradeSeq", strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -25,24 +26,22 @@ public class Grade {
         this.id = id;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id")
-    public StudySubject getSubject() {
-        return subject;
+    @Column(name = "SUBJECT_ID")
+    public Long getStudySubjectId() {
+        return studySubjectId;
     }
 
-    public void setSubject(StudySubject subject) {
-        this.subject = subject;
+    public void setStudySubjectId(Long studySubjectId) {
+        this.studySubjectId = studySubjectId;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
-    public Student getStudent() {
-        return student;
+    @Column(name = "STUDENT_ID")
+    public Long getStudentIndex(){
+        return studentIndex;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentIndex(Long studentIndex) {
+        this.studentIndex = studentIndex;
     }
 
     @Column(name = "GRADE_DATE")
@@ -80,8 +79,8 @@ public class Grade {
                 ", date=" + date +
                 ", value=" + value +
                 ", type='" + type.toString() + '\'' +
-                ", subject=" + subject +
-                ", student=" + student +
+                ", subject=" + studySubjectId +
+                ", student=" + studentIndex +
                 '}';
     }
 }

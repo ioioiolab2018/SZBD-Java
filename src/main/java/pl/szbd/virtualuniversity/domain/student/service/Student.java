@@ -1,4 +1,4 @@
-package pl.szbd.virtualuniversity.domain.student;
+package pl.szbd.virtualuniversity.domain.student.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +10,6 @@ import pl.szbd.virtualuniversity.domain.commons.model.entities.QuestionnaireAnsw
 import pl.szbd.virtualuniversity.domain.student.model.QuestionnaireView;
 import pl.szbd.virtualuniversity.domain.student.model.StudentGrade;
 import pl.szbd.virtualuniversity.domain.student.model.StudentInformation;
-import pl.szbd.virtualuniversity.domain.student.service.QuestionnaireService;
-import pl.szbd.virtualuniversity.domain.student.service.StudentInformationService;
-import pl.szbd.virtualuniversity.domain.student.service.StudentQuestionnaireService;
-import pl.szbd.virtualuniversity.domain.student.service.StudentSemesterService;
 
 import java.util.List;
 

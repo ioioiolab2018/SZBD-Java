@@ -10,12 +10,13 @@ import javax.persistence.*;
 public class Contact {
     private Long id;
     private ContactTypeEnum contactType;
-    private String Value;
-    private Person person;
+    private String value;
+    private String personId;
     private ConcactType2Enum type;
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "proposalSeq", sequenceName = "Contacts_SEQ")
+    @GeneratedValue(generator = "proposalSeq", strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -24,18 +25,18 @@ public class Contact {
         this.id = id;
     }
 
-    @Column
+    @Column(name = "TYPE")
     @Enumerated(EnumType.STRING)
     public ContactTypeEnum getContactType() {
         return contactType;
     }
 
-    @Column
-    @Enumerated(EnumType.STRING)
     public void setContactType(ContactTypeEnum contactType) {
         this.contactType = contactType;
     }
 
+    @Column(name = "CONTACT_TYPE")
+    @Enumerated(EnumType.STRING)
     public ConcactType2Enum getType() {
         return type;
     }
@@ -46,30 +47,31 @@ public class Contact {
 
     @Column(name = "VALUE")
     public String getValue() {
-        return Value;
+        return value;
     }
 
     public void setValue(String value) {
-        Value = value;
+        this.value = value;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
-    public Person getPerson() {
-        return person;
+
+    @Column(name = "person_id")
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(String person) {
+        this.personId = person;
     }
 
     @Override
     public String toString() {
         return "Contact{" +
                 "id=" + id +
-                ", contactType='" + contactType.toString() + '\'' +
-                ", Value='" + Value + '\'' +
-                ", person=" + person +
+                ", contactType=" + contactType +
+                ", value='" + value + '\'' +
+                ", personId='" + personId + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

@@ -15,6 +15,16 @@ public class StudentGroup {
     private StudyType type;
     private Date startDate;
     private Date endDate;
+    private Integer semester;
+
+    @Column(name="SEMESTER")
+    public Integer getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Integer semester) {
+        this.semester = semester;
+    }
 
     @Id
     @SequenceGenerator(name = "studentGroupSeq", sequenceName = "STUDENT_GROUPS_SEQ")
